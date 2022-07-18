@@ -1,4 +1,4 @@
-from .extentions import db, login_manager
+from .extentions import db, login_manager, ma
 from flask_login import UserMixin
 from datetime import datetime
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -28,13 +28,11 @@ class Users(db.Model, UserMixin):
     password_hash = db.Column(db.TEXT)
     admin = db.Column(db.Boolean, default=False)
 
-
     def __init__(self, firstName, lastName, email, password):
         self.email = email
         self.firstName = firstName
         self.lastName = lastName
         self.password_hash = generate_password_hash(password, 'sha256')
-
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -79,6 +77,17 @@ class Customers(db.Model):
     def __repr__(self):
         return self.name
 
+    # Customers Schema
+
+
+class CustomerSchema(ma.Schema):
+    class Mete:
+        fields = ('id', 'name', 'city', 'address', 'internalDomain', 'externalDomain', 'owaAdd')
+
+
+customer_schema = CustomerSchema()
+customers_schema = CustomerSchema(many=True)
+
 
 class Tasks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -102,9 +111,9 @@ class Tasks(db.Model):
 
 class WorkReports(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    createTime= db.Column(db.DateTime,  default=datetime.utcnow)
+    createTime = db.Column(db.DateTime, default=datetime.utcnow)
     customer = db.Column(db.String(20))
-    client= db.Column(db.String(20))
+    client = db.Column(db.String(20))
     description = db.Column(db.String(30))
     status = db.Column(db.String(25))
     classification = db.Column(db.String(20))
@@ -114,7 +123,8 @@ class WorkReports(db.Model):
     whatHasBeenDone = db.Column(db.String(150))
     clientEmailAddress = db.Column(db.String(30))
 
-    def __init__(self, customer, client, description,classification, resolve, status, reason, whatHasBeenDone, username,clientEmailAddress):
+    def __init__(self, customer, client, description, classification, resolve, status, reason, whatHasBeenDone,
+                 username, clientEmailAddress):
         self.customer = customer
         self.client = client
         self.description = description
@@ -131,9 +141,11 @@ def customer_query():
     query = db.session.query(Customers).all()
     return query
 
+
 def my_customer_query():
     # query = db.session.query(Customers.administrators).all()
     return Customers.query
+
 
 def bosses_names_query():
     query = db.session.query(Employees).all()
@@ -142,11 +154,11 @@ def bosses_names_query():
 
 class Hypervisor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    createTime= db.Column(db.DateTime,  default=datetime.utcnow)
+    createTime = db.Column(db.DateTime, default=datetime.utcnow)
     customer = db.Column(db.String(20))
-    ip_address= db.Column(db.String(20))
+    ip_address = db.Column(db.String(20))
     type = db.Column(db.String(30))
-    status = db.Column(db.String(25)) #active /not active
+    status = db.Column(db.String(25))  # active /not active
     ilo_address = db.Column(db.String(20))
     brand = db.Column(db.String(15))
     model = db.Column(db.String(15))
@@ -154,17 +166,15 @@ class Hypervisor(db.Model):
     physical_ram_in_GB = db.Column(db.String(15))
     numberOfProcessors = db.Column(db.String(10))
 
-    def __init__(self, customer,ip_address, type, status, ilo_address, brand, model, warranty, physical_ram_in_GB, numberOfProcessors):
+    def __init__(self, customer, ip_address, type, status, ilo_address, brand, model, warranty, physical_ram_in_GB,
+                 numberOfProcessors):
         self.customer = customer
         self.ip_address = ip_address
         self.type = type
         self.status = status
         self.ilo_address = ilo_address
         self.brand = brand
-        self.model= model
+        self.model = model
         self.warranty = warranty
         self.physical_ram_in_GB = physical_ram_in_GB
         self.numberOfProcessors = numberOfProcessors
-
-
-

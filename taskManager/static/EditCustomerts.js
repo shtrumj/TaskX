@@ -18,6 +18,8 @@
 //     submit.value = 'ערוך לקוח'
 // });
 function myfunc(){
+    select = document.getElementById("mycustomer");
+    console.log(select.value);
     clientname= document.getElementById("name");
     clientcity= document.getElementById("city");
     clientadd = document.getElementById("address");
