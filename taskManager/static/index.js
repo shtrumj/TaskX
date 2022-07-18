@@ -1,1 +1,1 @@
-window.setTimeout("document.getElementById('flash').style.display='none';", 4000);
+//window.setTimeout("document.getElementById('flash').style.display='none';", 4000);

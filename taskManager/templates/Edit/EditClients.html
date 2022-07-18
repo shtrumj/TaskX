@@ -8,13 +8,14 @@
             <div class="row d-flex h-100 text-center justify-content-center">
 
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 text-center " style="vertical-align: top">
-                    <form method="POST" style="vertical-align: top">
+                    <form method="POST" style="vertical-align: top" id="clientForm">
                         {{ form.hidden_tag() }}
                           <div class="dropdown btn-group">
                         <div class="form-outline sm-3 text-center dropdown" style="vertical-align: top">
                             {{ form.customer.label(class_="form-label") }}
                             </br>
-                            {{ form.customer(class_="form-control") }}
+                            {{ form.customer(onchange="myfunc()")}}
+
                         </div>
                         </div>
                         <div class="name"></div>
