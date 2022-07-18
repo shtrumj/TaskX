@@ -4,6 +4,14 @@
 
 {%  block content %}
 
+       <script>
+           const custname = '{{ customer.name }}'
+           const custcity = '{{ customer.city }}'
+           const custadd = '{{ customer.address }}'
+           const custindomain = '{{ customer.internalDomain }}'
+           const custexdomain = '{{ customer.externalDomain }}'
+           const custowaadd = '{{ customer.owaAdd }}'
+       </script>
    <div class="container-fluid h-custom text-center" style="vertical-align: top">
             <div class="row d-flex h-100 text-center justify-content-center">
 
@@ -11,10 +19,10 @@
                     <form method="POST" style="vertical-align: top" id="clientForm">
                         {{ form.hidden_tag() }}
                           <div class="dropdown btn-group">
-                        <div class="form-outline sm-3 text-center dropdown" style="vertical-align: top">
-                            {{ form.customer.label(class_="form-label") }}
+                        <div class="form-outline sm-3 text-center dropdown p-3 mb-2 bg-info text-dark" style="vertical-align: top">
+                            {{ myform.mycustomer.label(class_="form-label") }}
                             </br>
-                            {{ form.customer(onchange="myfunc()")}}
+                            {{ myform.mycustomer(onchange="myfunc()")}}
 
                         </div>
                         </div>
@@ -26,10 +34,54 @@
                         <div class="owaadd"></div>
 
                     </form>
+{#                      <div class="container-fluid h-custom text-right">#}
+{#            <div class="row d-flex justify-content-center align-center h-100">#}
+
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                    <form method="POST" class="text-dark">
+                        {{ form.hidden_tag() }}
+                        <div class="divider d-flex  sm-4 float-right text-dark">
+                            <p class="text-center fw-bold mx-3 mb-0"></p>
+                        </div>
+                        <div class="form-outline sm-4 float-right text-right text-dark">
+                            {{ form.name.label(class_="form-label") }}
+                            </br>
+                            {{ form.name(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.city.label(class_="form-label") }}
+                            </br>
+                            {{ form.city (class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.address.label(class_="form-label") }}
+                            </br>
+                            {{ form.address(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.internalDomain.label(class_="form-label") }}
+                            </br>
+                            {{ form.internalDomain(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.externalDomain.label(class_="form-label") }}
+                            </br>
+                            {{ form.externalDomain(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.owaadd.label(class_="form-label") }}
+                            </br>
+                            {{ form.owaadd(class_="form-control") }}
+                        </div>
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            {{ form.submit(class_="btn btn-primary btn-lg",value="עריכת לקוח")}}
+                        </div>
+
+                    </form>
                 </div>
 
             </div>
    </div>
-    <script type="text/javascript" src="../../static/EditCustommerts.js">
+    <script type="text/javascript" src="../../static/EditCustomerts.js">
     </script>
 {% endblock content %}

@@ -1,9 +1,7 @@
 from .extentions import db, login_manager
 from flask_login import UserMixin
 from datetime import datetime
-from wtforms import StringField, PasswordField, BooleanField, SelectField, DateTimeField
 from werkzeug.security import check_password_hash, generate_password_hash
-from wtforms_sqlalchemy.fields import QuerySelectField
 
 
 def employees_names_query():
@@ -28,6 +26,7 @@ class Users(db.Model, UserMixin):
     lastName = db.Column(db.TEXT)
     email = db.Column(db.TEXT, unique=True)
     password_hash = db.Column(db.TEXT)
+    admin = db.Column(db.Boolean, default=False)
 
 
     def __init__(self, firstName, lastName, email, password):
@@ -35,6 +34,7 @@ class Users(db.Model, UserMixin):
         self.firstName = firstName
         self.lastName = lastName
         self.password_hash = generate_password_hash(password, 'sha256')
+
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)

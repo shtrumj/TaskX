@@ -99,4 +99,4 @@ class InfraView(FlaskForm):
 
 
 class Mycustomersform(FlaskForm):
-    customer = QuerySelectField('בחרו לקוח', query_factory=my_customer_query, allow_blank=False, get_label='name')
+    mycustomer = QuerySelectField('בחרו לקוח', query_factory=my_customer_query, allow_blank=True, get_label='name')

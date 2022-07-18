@@ -70,6 +70,7 @@ def home():
         username = session['username']
         email = session['email']
         employeeID = Employees.query.filter_by(email=email).first_or_404()
+        admin = Users.query.filter_by(email=email).first_or_404()
         tasks = Tasks.query.filter_by(employee_id=employeeID.id, status='משימה פתוחה').all()
         closedTasks = Tasks.query.filter_by(employee_id=employeeID.id, status='משימה נסגרה').limit(3).all()
         # if request.method == 'POST':
@@ -92,7 +93,7 @@ def home():
                     return redirect(url_for('main.home'))
                     return '<h1>{}</h1>'.format(task_to_delete)
 
-    return render_template('home.html', employeeID=employeeID, tasks=tasks, form=form, closedTasks=closedTasks)
+    return render_template('home.html', employeeID=employeeID, tasks=tasks, form=form, closedTasks=closedTasks, admin=admin)
 
 
 @main.route('/addCustomer', methods=('GET', 'POST'))
@@ -260,12 +261,15 @@ def mycusotomers():
 
 @main.route('/editCustomers',methods=('GET','POST'))
 def editcust():
-    form=Mycustomersform()
+    myform=Mycustomersform()
+    form=CustomersForm()
+    customer = Customers.query.all()
     if form.validate_on_submit():
         cust = request.form.get('customer')
-        form = CustomersForm()
-        customer = Customers.query.filter_by(id=cust).first()
-        # return f'<h1>Customer name is {customer.name} </h1>'
-        return render_template('edit/editcustomer.html', customer=customer, form=form)
+        form2 = Mycustomersform()
+        form =Mycustomersform()
+        # customer = Customers.query.filter_by(id=cust).first()
 
-    return render_template('Edit/EditClients.html', form=form)
+
+        # return render_template('edit/editcustomer.html', customer=customer, form=form , form2=form2)
+    return render_template('Edit/EditClients.html', form=form, myform=myform, customer=customer)
