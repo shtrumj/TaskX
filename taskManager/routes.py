@@ -111,7 +111,7 @@ def addCustomer():
         db.session.commit()
         flash('לקוח נוצר בהצלחה!', category='success')
         return redirect(url_for('main.addCustomer'))
-    return render_template('edit/editcustomer.html', form=form)
+    return render_template('addcustomer.html', form=form)
 
 
 @main.route('/addEmployee', methods=('GET', 'POST'))
@@ -265,6 +265,7 @@ def editcust():
         cust = request.form.get('customer')
         form = CustomersForm()
         customer = Customers.query.filter_by(id=cust).first()
-        return render_template('addcustomer.html', customer=customer,form=form)
+        # return f'<h1>Customer name is {customer.name} </h1>'
+        return render_template('edit/editcustomer.html', customer=customer, form=form)
 
     return render_template('Edit/EditClients.html', form=form)
