@@ -1,0 +1,99 @@
+{% extends 'menu.html' %}
+
+{% block title %}Home {% endblock %}
+
+{% block extracss %}
+    <link href="../static/style.css" rel="stylesheet">
+    <link href="../static/table.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+        <form method="POST" action="">
+     {{ form.hidden_tag() }}
+    </br>
+    {% block table %}
+        <h3> שלום {{ session.username }} </h3>
+        </br>
+        <h4>המשימות הפתוחות שלי:</h4>
+    <table class="table">
+     <thead class="thead-dark">
+        <tr>
+            <th scope="col">הסתיים</th>
+            <th scope="col">שם הלקוח</th>
+            <th scope="col">תיאור המשימה</th>
+            <th scope="col">זמן ליעד</th>
+            <th scope="col">מנהל דיווח</th>
+        </tr>
+     </thead>
+ <tbody>
+ {%- for row in tasks %}
+    <tr>
+        <td class="complete">
+            <input class="form-check-input {{ row.id }}" type="checkbox" value="{{ row.id }}" id="flexCheckDefault" name="task-checkbox">
+       </td>
+       <td>
+           {{ row.customer}}
+       </td>
+           <td>
+           {{ row.description}}
+       </td>
+    </td>
+        <td>
+           {{ row.deadline}}
+       </td>
+            <td>
+           {{ row.reportTo}}
+       </td>
+    </tr>
+ {%- endfor %}
+ </tbody>
+    </table>
+<br>
+<h4> נסגרו לאחרונה:</h4>
+        <br>
+    <table class="table">
+     <thead class="thead-dark">
+        <tr>
+            <th scope="col">פתיחה</th>
+            <th scope="col">שם הלקוח</th>
+            <th scope="col">תיאור המשימה</th>
+            <th scope="col">זמן ליעד</th>
+            <th scope="col">מנהל דיווח</th>
+        </tr>
+     </thead>
+ <tbody>
+ {%- for row in closedTasks %}
+    <tr>
+        <td class="complete">
+            <input class="form-check-input {{ row.id }}" type="checkbox" value="{{ row.id }}" id="flexCheckDefault" name="closetask-checkbox">
+       </td>
+       <td>
+           {{ row.customer}}
+       </td>
+           <td>
+           {{ row.description}}
+       </td>
+    </td>
+        <td>
+           {{ row.deadline}}
+       </td>
+            <td>
+           {{ row.reportTo}}
+       </td>
+    </tr>
+ {%- endfor %}
+ </tbody>
+ </table>
+
+{% endblock table %}
+    </br>
+    </br>
+
+        <div class="text-center">
+            {{ form.submit(class_="btn btn-primary btn-lg") }}
+        </div>
+    </form>
+    <script type="text/javascript" src="../static/home.js"></script>
+{% endblock content %}
+
+<button type="button" class="btn btn-primary">Primary</button>

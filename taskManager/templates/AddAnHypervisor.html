@@ -1,0 +1,87 @@
+{% extends 'menu.html' %}
+{% block title %}AddATask {% endblock %}
+{% block heading %} הוספת שרת מארח{% endblock heading %}
+
+{%  block content %}
+{#    <script src="../static/Email2Domain.js"></script>#}
+
+   <div class="container-fluid h-custom">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="divider d-flex align-items-center sm-4">
+                            <p class="text-center fw-bold mx-3 mb-0"></p>
+                        </div>
+                        <div class="form-outline sm-4 ">
+                            {{ form.customer.label(class_="form-label") }}
+                            </br>
+                           {{ form.customer(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-4 ">
+                            {{ form.ip_address.label(class_="form-label") }}
+                            </br>
+                            {{ form.ip_address(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.ILO_address.label(class_="form-label") }}
+                            </br>
+                            {{ form.ILO_address(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.type.label(class_="form-label") }}
+                            </br>
+                            {{ form.type(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.status.label(class_="form-label") }}
+                            </br>
+                            {{ form.status(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.brand.label(class_="form-label", id="resolveLabel") }}
+                            </br>
+                            {{ form.brand(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.model.label(class_="form-label", id="reasonLabel") }}
+                            </br>
+                            {{ form.model(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.warranty.label(class_="form-label", id="whatHasBeenDoneLabel") }}
+                            </br>
+                            {{ form.warranty(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.physical_ram_in_GB.label(class_="form-label", id="whatHasBeenDoneLabel") }}
+                            </br>
+                            {{ form.physical_ram_in_GB(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.numberOfProcessors.label(class_="form-label", id="whatHasBeenDoneLabel") }}
+                            </br>
+                            {{ form.numberOfProcessors(class_="form-control") }}
+                        </div>
+
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            {{ form.submit(class_="btn btn-primary btn-lg")}}
+                        </div>
+{#                            {% for domain in extDomains %}#}
+{#                                <p>{{ domain.externalDomain }}</p>#}
+{#                            {% endfor %}#}
+                    </form>
+                    <div id="JS">
+
+                    </div>
+                </div>
+            </div>
+   </div>
+
+{#    <script type="text/javascript" extdomain = myFunc({{extDomains|tojson}})></script>#}
+{#    <script src="../static/dynamic.js"></script>#}
+{#    <script src="../static/workReport.js"></script>#}
+    <script src="../static/Email2Domain.js"></script>
+
+{% endblock content %}

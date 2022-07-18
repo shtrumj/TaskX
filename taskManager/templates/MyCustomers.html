@@ -1,0 +1,23 @@
+{% extends 'menu.html' %}
+{% block title %}AddATask {% endblock %}
+{% block heading %} הלקוחות שלי{% endblock heading %}
+
+{%  block content %}
+
+   <div class="container-fluid h-custom" style="vertical-align: top">
+            <div class="row d-flex  h-100">
+
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" style="vertical-align: top">
+                    <form method="POST" style="vertical-align: top">
+                        {{ form.hidden_tag() }}
+                        <div class="form-outline sm-3" style="vertical-align: top">
+                            {{ form.customer.label(class_="form-label") }}
+                            </br>
+                            {{ form.customer(class_="form-control") }}
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+   </div>
+{% endblock content %}

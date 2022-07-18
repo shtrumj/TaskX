@@ -1,0 +1,34 @@
+{% extends 'menu.html' %}
+{% block title %}EditCustomers {% endblock %}
+{% block heading %}עריכת לקוחות{% endblock heading %}
+
+{%  block content %}
+
+   <div class="container-fluid h-custom text-center" style="vertical-align: top">
+            <div class="row d-flex h-100 text-center justify-content-center">
+
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 text-center " style="vertical-align: top">
+                    <form method="POST" style="vertical-align: top">
+                        {{ form.hidden_tag() }}
+                          <div class="dropdown btn-group">
+                        <div class="form-outline sm-3 text-center dropdown" style="vertical-align: top">
+                            {{ form.customer.label(class_="form-label") }}
+                            </br>
+                            {{ form.customer(class_="form-control") }}
+                        </div>
+                        </div>
+                        <div class="name"></div>
+                        <div class="city"></div>
+                        <div class="address"></div>
+                        <div class="intenaldomain"></div>
+                        <div class="externaldomain"></div>
+                        <div class="owaadd"></div>
+
+                    </form>
+                </div>
+
+            </div>
+   </div>
+    <script type="text/javascript" src="../../static/EditCustommerts.js">
+    </script>
+{% endblock content %}

@@ -1,0 +1,81 @@
+{% extends 'menu.html' %}
+
+{% block title %}Home {% endblock %}
+
+{% block extracss %}
+    <link href="../static/style.css" rel="stylesheet">
+    <link href="../static/table.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+        <form method="POST" action="">
+     {{ form.hidden_tag() }}
+    </br>
+    {% block table %}
+        <h3> שלום {{ session.username }} </h3>
+        </br>
+        <h4>דוחות סיכומי יום:</h4>
+    <table class="table">
+     <thead class="thead-dark">
+        <tr>
+            <th scope="col">שם הלקוח</th>
+            <th scope="col">שם משתמש</th>
+            <th scope="col">כתובת דואר משתמש</th>
+            <th scope="col">תיאור התקלה</th>
+            <th scope="col">סטטוס</th>
+            <th scope="col">זמן יצירה</th>
+            <th scope="col">שם ממלא הדוח</th>
+        </tr>
+     </thead>
+ <tbody>
+ {%- for row in Reports %}
+    <tr>
+        <td>
+             {{ row.customer }}
+       </td>
+       <td>
+           {{ row.client}}
+       </td>
+        <td>
+           {{ row.clientEmailAddress}}
+       </td>
+           <td>
+           {{ row.description}}
+       </td>
+    </td>
+        <td>
+           {% if row.status =='2' %}
+             <h6>בעיה נפתרה</h6>
+            {%  elif row.status =='1'%}
+               <h5 style="color: red">טרם החל טיפול</h5>
+            {%  else %}
+              <h6>בעיה בטיפול</h6>
+            {% endif %}
+       </td>
+        <td>
+           {{ row.createTime}}
+       </td>
+        <td>
+           {{ row.username}}
+       </td>
+
+    </tr>
+
+ {%- endfor %}
+
+
+
+ </tbody>
+ </table>
+
+{% endblock table %}
+    </br>
+    </br>
+
+        <div class="text-center">
+            {{ form.submit(class_="btn btn-primary btn-lg") }}
+        </div>
+    </form>
+{% endblock content %}
+
+<button type="button" class="btn btn-primary">Primary</button>

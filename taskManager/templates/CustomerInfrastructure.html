@@ -1,0 +1,31 @@
+{% extends 'menu.html' %}
+{% block title %}Infrastructure {% endblock %}
+{% block excss %}
+<link rel="stylesheet" href="../static/infraview.css">
+{% endblock excss %}
+{% block heading %} תצוגת תיק לקוח{% endblock heading %}
+
+{%  block content %}
+{#    <script src="../static/Email2Domain.js"></script>#}
+<script>  var hypervisor='{{ serialHyper }}' </script>
+   <div class="container-fluid h-custom">
+            <div class="row d-flex align-top h-100">
+
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                              <div class="form-outline sm-3">
+                            {{ form.customer.label(class_="form-label") }}
+                            </br>
+                            {{ form.customer (class_="form-control") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+    {% for server in hyper %}
+        <div id="server{{ loop.index}} class=servers"></div>
+    {% endfor %}
+   </div>
+<script src="../static/infra.js" type="text/javascript"></script>
+{% endblock content %}

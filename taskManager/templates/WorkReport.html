@@ -1,0 +1,74 @@
+{% extends 'menu.html' %}
+{% block title %}AddATask {% endblock %}
+{% block heading %} דוח עבודה ללקוח{% endblock heading %}
+
+{%  block content %}
+
+   <div class="container-fluid h-custom">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="divider d-flex align-items-center sm-4">
+                            <p class="text-center fw-bold mx-3 mb-0"></p>
+                        </div>
+                        <div id="New_div"></div>
+                        <div class="form-outline sm-4 ">
+                            {{ form.customer.label(class_="form-label") }}
+                            </br>
+                           {{ form.customer(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-4 ">
+                            {{ form.clientEmailAddress.label(class_="form-label") }}
+                            </br>
+                           {{ form.clientEmailAddress(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-4 ">
+                            {{ form.client.label(class_="form-label") }}
+                            </br>
+                            {{ form.client(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.description.label(class_="form-label") }}
+                            </br>
+                            {{ form.description(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.classification.label(class_="form-label") }}
+                            </br>
+                            {{ form.classification(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.status.label(class_="form-label") }}
+                            </br>
+                            {{ form.status(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.resolve.label(class_="form-label", id="resolveLabel") }}
+                            </br>
+                            {{ form.resolve(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.reason.label(class_="form-label", id="reasonLabel") }}
+                            </br>
+                            {{ form.reason(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-3">
+                            {{ form.whatHasBeenDone.label(class_="form-label", id="whatHasBeenDoneLabel") }}
+                            </br>
+                            {{ form.whatHasBeenDone(class_="form-control") }}
+                        </div>
+
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            {{ form.submit(class_="btn btn-primary btn-lg")}}
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+   </div>
+<script src="../static/dynamic.js"></script>
+    <script src="../static/workReport.js"></script>
+
+{% endblock content %}
