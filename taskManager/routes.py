@@ -269,10 +269,19 @@ def editcust():
     form=CustomersForm()
     customer = Customers.query.all()
     if form.validate_on_submit():
-        cust = request.form.get('customer')
-        form2 = Mycustomersform()
-        form =Mycustomersform()
-        # customer = Customers.query.filter_by(id=cust).first()
+        name = request.form.get('name')
+        city = request.form.get('city')
+        address = request.form.get('address')
+        internalDomain = request.form.get('internalDomain')
+        externalDomain = request.form.get('externalDomain')
+        owaadd = request.form.get('owaadd')
+        sysadmins = request.form.get('sysadmins')
+        edit_cust = Customers(name=name, city=city, address=address, internalDomain=internalDomain,
+                              externalDomain=externalDomain, owaAdd=owaadd, sysadmins=sysadmins)
+        db.session.add(edit_cust)
+        db.session.commit()
+
+
 
 
         # return render_template('edit/editcustomer.html', customer=customer, form=form , form2=form2)
@@ -284,7 +293,6 @@ def api_query():
     all__customers = Customers.query.all()
     result = customers_schema.dumps(all__customers, ensure_ascii=False)
     result = Response(result,content_type="application/json; charset=utf-8" )
-
     return result
 
 

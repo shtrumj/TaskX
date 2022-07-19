@@ -69,14 +69,16 @@ class Customers(db.Model):
     internalDomain = db.Column(db.String(15))
     externalDomain = db.Column(db.String(20))
     owaAdd = db.Column(db.String(20))
+    sysadmins = db.Column(db.String(30))
 
-    def __init__(self, name, city, address, internalDomain, externalDomain, owaAdd):
+    def __init__(self, name, city, address, internalDomain, externalDomain, owaAdd, sysadmins):
         self.name = name
         self.city = city
         self.address = address
         self.internalDomain = internalDomain
         self.externalDomain = externalDomain
         self.owaAdd = owaAdd
+        self.sysadmins = sysadmins
 
     def __repr__(self):
         return self.name
@@ -92,6 +94,7 @@ class CustomerSchema(Schema):
     internalDomain = fields.Str()
     externalDomain = fields.Str()
     owaAdd = fields.Str()
+    sysadmins = fields.Str()
 
 
 
@@ -157,6 +160,10 @@ def my_customer_query():
 
 
 def bosses_names_query():
+    query = db.session.query(Employees).all()
+    return query
+
+def employees_query():
     query = db.session.query(Employees).all()
     return query
 

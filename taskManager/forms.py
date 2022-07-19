@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import SubmitField, StringField, PasswordField, EmailField, DateField, SelectField, TextAreaField,IntegerField
+from wtforms import SubmitField, StringField, PasswordField, EmailField, DateField, SelectField, TextAreaField,IntegerField, SelectMultipleField
 from wtforms.validators import DataRequired, length, EqualTo, Email
 from wtforms_sqlalchemy.fields import QuerySelectField
 from taskManager.models import customer_query, employees_names_query, bosses_names_query,my_customer_query
@@ -30,7 +30,7 @@ class CustomersForm(FlaskForm):
     externalDomain = StringField("דומיין חיצוני")
     owaadd = StringField("כתובת OWA")
     submit = SubmitField('יצירת לקוח')
-
+    sysadmins = QuerySelectField('ניהול רשת',query_factory=employees_names_query, allow_blank=True)
 
 class EmployeeForm(FlaskForm):
     firstName = StringField("שם פרטי")
