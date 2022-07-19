@@ -1,7 +1,11 @@
-from .extentions import db, login_manager, ma
+import app
+from .extentions import db, login_manager
 from flask_login import UserMixin
 from datetime import datetime
+from marshmallow import Schema, fields
 from werkzeug.security import check_password_hash, generate_password_hash
+from marshmallow import Schema, fields, ValidationError, pre_load
+
 
 
 def employees_names_query():
@@ -80,14 +84,19 @@ class Customers(db.Model):
     # Customers Schema
 
 
-class CustomerSchema(ma.Schema):
-    class Mete:
-        fields = ('id', 'name', 'city', 'address', 'internalDomain', 'externalDomain', 'owaAdd')
+class CustomerSchema(Schema):
+    id = fields.Int(dump_only=True)
+    name = fields.Str()
+    city = fields.Str()
+    address = fields.Str()
+    internalDomain = fields.Str()
+    externalDomain = fields.Str()
+    owaAdd = fields.Str()
 
 
-customer_schema = CustomerSchema()
+
 customers_schema = CustomerSchema(many=True)
-
+customer_schema = CustomerSchema()
 
 class Tasks(db.Model):
     id = db.Column(db.Integer, primary_key=True)

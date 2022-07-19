@@ -1,14 +1,17 @@
-import requests
+import flask
+from flask import Response, json
 from flask import Blueprint, render_template, request, url_for, redirect, flash, session, jsonify
 from taskManager.models import Users, Customers, Employees, Tasks, WorkReports, Hypervisor
 from wtforms import ValidationError
 import re
-import json
+from flask_cors import CORS, cross_origin
+from taskManager.models import customers_schema, customer_schema
 from datetime import datetime
 from flask_login import login_user, login_required, logout_user, current_user
 from taskManager.forms import Loginform, RegistrationForm, CustomersForm, EmployeeForm, TasksForm, HomeSubmit, WorkReportForm, ReportView, HyperVisorForm,InfraView, Mycustomersform
 from taskManager.extentions import db, login_manager
 from sqlalchemy.ext.serializer import loads, dumps
+
 
 
 main = Blueprint('main', __name__, template_folder='taskManager/templates', static_folder='taskManager/static')
@@ -275,17 +278,14 @@ def editcust():
         # return render_template('edit/editcustomer.html', customer=customer, form=form , form2=form2)
     return render_template('Edit/EditClients.html', form=form, myform=myform, customer=customer)
 
-@main.route('/customerapi', methods=['POST'])
+@main.route('/it', methods=['GET'])
+@cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
 def api_query():
-    id = requests.json['id']
-    name = requests.json['name']
-    city = requests.json['city']
-    address =requests.json['address']
-    internaleDomain = requests.json['internalDomain']
-    externalDomain= requests.json['externalDomain']
-    owaAdd= requests.json['owaAdd']
-    new_client = Customers(name, city,address, internaleDomain,externalDomain,owaAdd)
-    db.session.add(new_client)
-    db.session.commit()
+    all__customers = Customers.query.all()
+    result = customers_schema.dumps(all__customers, ensure_ascii=False)
+    result = Response(result,content_type="application/json; charset=utf-8" )
+
+    return result
+
 
 
