@@ -1,7 +1,7 @@
 import flask
 from flask import Response, json
 from flask import Blueprint, render_template, request, url_for, redirect, flash, session, jsonify
-from taskManager.models import Users, Customers, Employees, Tasks, WorkReports, Hypervisor
+from taskManager.models import Users, Customers, Employees, Tasks, WorkReports, Hypervisor, employees_query
 from wtforms import ValidationError
 import re
 from flask_cors import CORS, cross_origin
@@ -11,7 +11,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from taskManager.forms import Loginform, RegistrationForm, CustomersForm, EmployeeForm, TasksForm, HomeSubmit, WorkReportForm, ReportView, HyperVisorForm,InfraView, Mycustomersform
 from taskManager.extentions import db, login_manager
 from sqlalchemy.ext.serializer import loads, dumps
-
+from flask_cors import CORS, cross_origin
 
 
 main = Blueprint('main', __name__, template_folder='taskManager/templates', static_folder='taskManager/static')
@@ -103,6 +103,15 @@ def home():
 @main.route('/addCustomer', methods=('GET', 'POST'))
 def addCustomer():
     form = CustomersForm()
+    email = session['email']
+    myemp = Employees.query.all()
+    admin = Users.query.filter_by(email=email).first_or_404()
+    sysadmins = request.form.getlist('sysadmins')
+    admini = ''
+    for admin in sysadmins:
+        admini += admin
+        if len(list(sysadmins)) > 0:
+            admini += ','
     if form.validate_on_submit():
         name = form.name.data
         city = form.city.data
@@ -111,12 +120,12 @@ def addCustomer():
         externalDomain = form.externalDomain.data
         owaAdd = form.owaadd.data
         new_customer = Customers(name=name, city=city, address=address, internalDomain=internalDomain,
-                                 externalDomain=externalDomain, owaAdd=owaAdd)
+                                 externalDomain=externalDomain, owaAdd=owaAdd,sysadmins=admini)
         db.session.add(new_customer)
         db.session.commit()
         flash('לקוח נוצר בהצלחה!', category='success')
         return redirect(url_for('main.addCustomer'))
-    return render_template('addcustomer.html', form=form)
+    return render_template('addcustomer.html', form=form, empoloyees=myemp, admin=admin)
 
 
 @main.route('/addEmployee', methods=('GET', 'POST'))
@@ -265,34 +274,49 @@ def mycusotomers():
 
 @main.route('/editCustomers',methods=('GET','POST'))
 def editcust():
-    myform=Mycustomersform()
-    form=CustomersForm()
+    myemp = Employees.query.all()
+    myform = Mycustomersform()
+    form = CustomersForm()
     customer = Customers.query.all()
-    if form.validate_on_submit():
+    if request.method == 'POST':
         name = request.form.get('name')
         city = request.form.get('city')
         address = request.form.get('address')
         internalDomain = request.form.get('internalDomain')
         externalDomain = request.form.get('externalDomain')
         owaadd = request.form.get('owaadd')
-        sysadmins = request.form.get('sysadmins')
-        edit_cust = Customers(name=name, city=city, address=address, internalDomain=internalDomain,
-                              externalDomain=externalDomain, owaAdd=owaadd, sysadmins=sysadmins)
+        customer_id = request.form.get("cid")
+        sysadmins = request.form.getlist('sysadmins')
+
+        admini = ''
+        for admin in sysadmins:
+            admini += admin
+            if len(admin) > 1:
+                admin += ','
+        edit_cust = Customers.query.filter_by(id=customer_id).first
+        edit_cust.id = customer_id
+        edit_cust.name = name
+        edit_cust.city = city
+        edit_cust.address = address
+        edit_cust.owaAdd = owaadd
+        edit_cust.internalDomain = internalDomain
+        edit_cust.externalDomain = externalDomain
         db.session.add(edit_cust)
         db.session.commit()
+        flash('דוח נשלח בהצלחה!', category='success')
+        # db.session.delete(to_delete)
+        # db.session.commit()
+        return redirect((url_for('main.editcust')))
 
+    return render_template('Edit/EditClients.html', form=form, myform=myform, customer=customer, empoloyees=myemp)
 
-
-
-        # return render_template('edit/editcustomer.html', customer=customer, form=form , form2=form2)
-    return render_template('Edit/EditClients.html', form=form, myform=myform, customer=customer)
 
 @main.route('/it', methods=['GET'])
-@cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
+# @cross_origin(origin='*',headers=['Content- Type','Authorization'])
 def api_query():
     all__customers = Customers.query.all()
     result = customers_schema.dumps(all__customers, ensure_ascii=False)
-    result = Response(result,content_type="application/json; charset=utf-8" )
+    result = jsonify(result)
     return result
 
 

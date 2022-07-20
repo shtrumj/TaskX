@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, length, EqualTo, Email
 from wtforms_sqlalchemy.fields import QuerySelectField
 from taskManager.models import customer_query, employees_names_query, bosses_names_query,my_customer_query
 import taskManager.routes
-
+# from taskManager.models import Employees
 
 class Loginform(FlaskForm):
     email = StringField("כתובת דואר אלקטרוני", validators=[DataRequired(), Email()])
@@ -30,7 +30,7 @@ class CustomersForm(FlaskForm):
     externalDomain = StringField("דומיין חיצוני")
     owaadd = StringField("כתובת OWA")
     submit = SubmitField('יצירת לקוח')
-    sysadmins = QuerySelectField('ניהול רשת',query_factory=employees_names_query, allow_blank=True)
+    sysadmins = StringField('ניהול רשת')
 
 class EmployeeForm(FlaskForm):
     firstName = StringField("שם פרטי")
@@ -98,4 +98,4 @@ class InfraView(FlaskForm):
 
 
 class Mycustomersform(FlaskForm):
-    mycustomer = QuerySelectField('בחרו לקוח', query_factory=my_customer_query, allow_blank=True, get_label='name')
+    mycustomer = QuerySelectField('בחרו לקוח', query_factory=customer_query, allow_blank=True)

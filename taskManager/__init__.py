@@ -6,6 +6,7 @@ from .extentions import db, migrate, login_manager, CORS, cross_origin
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from taskManager.routes import main
 from taskManager.tests import tests
+from flask_cors import CORS
 
 
 import os
@@ -24,7 +25,8 @@ def create_app():
     app.register_blueprint(main)
     login_manager.init_app(app)
     api = Api(app)
-    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+    # cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+    CORS(app)
     app.register_blueprint(tests)
     app.config["SESSION_PERMANENT"] = False
     app.config["SESSION_TYPE"] = "filesystem"

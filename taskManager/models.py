@@ -5,6 +5,8 @@ from datetime import datetime
 from marshmallow import Schema, fields
 from werkzeug.security import check_password_hash, generate_password_hash
 from marshmallow import Schema, fields, ValidationError, pre_load
+from sqlalchemy.ext.mutable import MutableList
+from sqlalchemy.types import ARRAY
 
 
 
@@ -155,8 +157,8 @@ def customer_query():
 
 
 def my_customer_query():
-    # query = db.session.query(Customers.administrators).all()
-    return Customers.query
+    query = db.session.query(Customers.administrators).all()
+    return query
 
 
 def bosses_names_query():

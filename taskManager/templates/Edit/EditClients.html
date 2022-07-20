@@ -5,7 +5,7 @@
 {%  block content %}
 
        <script>
-            const custname = '{{ customer.name }}'
+           const custid = '{{ customer.id }}'
            const custname = '{{ customer.name }}'
            const custcity = '{{ customer.city }}'
            const custadd = '{{ customer.address }}'
@@ -20,7 +20,7 @@
                     <form method="POST" style="vertical-align: top" id="clientForm">
                         {{ form.hidden_tag() }}
                           <div class="dropdown btn-group">
-                        <div class="form-outline sm-3 text-center dropdown p-3 mb-2 bg-primary text-dark" style="vertical-align: top; border-radius: 15px;>
+                        <div class="form-outline sm-3 text-center dropdown p-3 mb-2 bg-primary text-dark" style="vertical-align: top; border-radius: 15px;">
                             {{ myform.mycustomer.label(class_="form-label")}}
                             </br>
                             {{ myform.mycustomer(onchange="myfunc()")}}
@@ -74,15 +74,19 @@
                             </br>
                             {{ form.owaadd(class_="form-control form-group-lg input-group-lg") }}
                         </div>
-                        <div class="form-outline sm-3">
-                            {{ form.sysadmins.label(class_="form-label form-group-lg input-group-lg") }}
-                            </br>
-                            {{ form.sysadmins(class_="form-control") }}
-                        </div>
+{#                        <input name="cid" id="cid"> {{ customer.id }} </input>#}
+{#                        <br>#}
+                        <select class="form-outline sm-3 form-control" multiple aria-label="multiple select example" name="sysadmins" id="sysadmins">
+                          <option selected>מנהלי רשת</option>
+                            {% for admin in empoloyees %}
+                                <option value={{ admin.id }} >{{ admin.firstName }}</option>
+                            {% endfor %}
+
+                        </select>
+
                         <div class="text-center text-lg-start mt-4 pt-2">
                             {{ form.submit(class_="btn btn-primary btn-lg",value="עריכת לקוח")}}
                         </div>
-
                     </form>
                 </div>
                 </div>

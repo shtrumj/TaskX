@@ -8,6 +8,6 @@ from flask_cors import CORS, cross_origin
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
-cors = CORS()
+CORS()
 
 
