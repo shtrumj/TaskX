@@ -1,4 +1,8 @@
-{% extends 'formBase.html' %}
+{% if admin.admin == True %}
+    {% extends 'admin_menu.html' %}
+{% else %}
+    {% extends 'menu.html' %}
+{% endif %}
 {% block title %}AddCustomer {% endblock %}
 {% block heading %} הוספת לקוח{% endblock heading %}
 
@@ -43,6 +47,16 @@
                             </br>
                             {{ form.owaadd(class_="form-control") }}
                         </div>
+                        <br>
+                    <div>
+                        <select class="form-outline sm-3 form-control" multiple aria-label="multiple select example" name="sysadmins" id="sysadmins">
+                          <option selected>מנהלי רשת</option>
+                            {% for admin in empoloyees %}
+                                <option value={{ admin.id }} >{{ admin.firstName }}</option>
+                            {% endfor %}
+
+                        </select>
+                        </div>
                         <div class="text-center text-lg-start mt-4 pt-2">
                             {{ form.submit(class_="btn btn-primary btn-lg")}}
                         </div>
@@ -51,5 +65,5 @@
                 </div>
             </div>
    </div>
-
+<script src="../static/addCustomer.js" type="text/javascript"></script>
 {% endblock content %}
