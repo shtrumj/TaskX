@@ -9,5 +9,4 @@ db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
 CORS()
-
-
+ma = Marshmallow()

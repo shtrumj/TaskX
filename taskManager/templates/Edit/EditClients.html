@@ -19,13 +19,23 @@
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 text-center " style="vertical-align: top">
                     <form method="POST" style="vertical-align: top" id="clientForm">
                         {{ form.hidden_tag() }}
-                          <div class="dropdown btn-group">
-                        <div class="form-outline sm-3 text-center dropdown p-3 mb-2 bg-primary text-dark" style="vertical-align: top; border-radius: 15px;">
-                            {{ myform.mycustomer.label(class_="form-label")}}
-                            </br>
-                            {{ myform.mycustomer(onchange="myfunc()")}}
-                        </div>
-                        </div>
+
+                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="mycustomer" onchange="myfunc()">
+                              <option selected>אנא בחרו לקוח</option>
+                                {%  for i in customer %}
+                                <option value="{{ i.id }}">{{ i.name }}</option>
+                                {% endfor %}
+
+                            </select>
+
+
+{#                          <div class="dropdown btn-group">#}
+{#                        <div class="form-outline sm-3 text-center dropdown p-3 mb-2 bg-primary text-dark" style="vertical-align: top; border-radius: 15px;">#}
+{#                            {{ myform.mycustomer.label(class_="form-label")}}#}
+{#                            </br>#}
+{#                            {{ myform.mycustomer(onchange="myfunc()")}}#}
+{#                        </div>#}
+{#                        </div>#}
                         <div class="name"></div>
                         <div class="city"></div>
                         <div class="address"></div>

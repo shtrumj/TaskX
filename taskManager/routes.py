@@ -5,7 +5,7 @@ from taskManager.models import Users, Customers, Employees, Tasks, WorkReports, 
 from wtforms import ValidationError
 import re
 from flask_cors import CORS, cross_origin
-from taskManager.models import customers_schema, customer_schema
+from taskManager.models import customer_schema
 from datetime import datetime
 from flask_login import login_user, login_required, logout_user, current_user
 from taskManager.forms import Loginform, RegistrationForm, CustomersForm, EmployeeForm, TasksForm, HomeSubmit, WorkReportForm, ReportView, HyperVisorForm,InfraView, Mycustomersform
@@ -277,7 +277,7 @@ def editcust():
     myemp = Employees.query.all()
     myform = Mycustomersform()
     form = CustomersForm()
-    customer = Customers.query.all()
+    retcustomer = Customers.query.all()
     if request.method == 'POST':
         name = request.form.get('name')
         city = request.form.get('city')
@@ -294,7 +294,6 @@ def editcust():
             if len(admin) > 1:
                 admin += ','
         edit_cust = Customers.query.filter_by(id=customer_id).first
-        edit_cust.id = customer_id
         edit_cust.name = name
         edit_cust.city = city
         edit_cust.address = address
@@ -308,16 +307,19 @@ def editcust():
         # db.session.commit()
         return redirect((url_for('main.editcust')))
 
-    return render_template('Edit/EditClients.html', form=form, myform=myform, customer=customer, empoloyees=myemp)
+    return render_template('Edit/EditClients.html', form=form, myform=myform, customer=retcustomer, empoloyees=myemp)
 
 
 @main.route('/it', methods=['GET'])
 # @cross_origin(origin='*',headers=['Content- Type','Authorization'])
 def api_query():
-    all__customers = Customers.query.all()
-    result = customers_schema.dumps(all__customers, ensure_ascii=False)
-    result = jsonify(result)
-    return result
+        # result = customers_schema.dumps(all_customers, ensure_ascii=False)
+        all_customers = Customers.query.all()
+        almost =jsonify(customer_schema.dump(all_customers))
+        # return almost
+        return {'data': customer_schema.dump(all_customers)},201
+
+
 
 
 

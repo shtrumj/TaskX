@@ -1,5 +1,5 @@
 import app
-from .extentions import db, login_manager
+from .extentions import db, login_manager,ma
 from flask_login import UserMixin
 from datetime import datetime
 from marshmallow import Schema, fields
@@ -51,7 +51,7 @@ class Employees(db.Model):
     email = db.Column(db.String(25), unique=True)
     phone = db.Column(db.TEXT)
     customers = db.relationship('Customers', secondary=EmployeeSysadmin, backref='administrators')
-    tasks = db.relationship('Tasks', backref='employee', lazy=True)
+    # tasks = db.relationship('Tasks', backref='employee', lazy=True)
 
     def __init__(self, firstName, lastName, email, phone):
         self.firstName = firstName
@@ -88,20 +88,26 @@ class Customers(db.Model):
     # Customers Schema
 
 
-class CustomerSchema(Schema):
-    id = fields.Int(dump_only=True)
-    name = fields.Str()
-    city = fields.Str()
-    address = fields.Str()
-    internalDomain = fields.Str()
-    externalDomain = fields.Str()
-    owaAdd = fields.Str()
-    sysadmins = fields.Str()
+class CustomerSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Customers
+customer_schema = CustomerSchema(many=True)
+
+
+#         fields =("id","name","city","address","internalDomain", "externalDomain", "owaAdd", "sysadmins")
+# customer_schema = CustomerSchema(many=True)
+
+    #
+    # name = fields.Str()
+    # city = fields.Str()
+    # address = fields.Str()
+    # internalDomain = fields.Str()
+    # externalDomain = fields.Str()
+    # owaAdd = fields.Str()
+    # sysadmins = fields.Str()
 
 
 
-customers_schema = CustomerSchema(many=True)
-customer_schema = CustomerSchema()
 
 class Tasks(db.Model):
     id = db.Column(db.Integer, primary_key=True)

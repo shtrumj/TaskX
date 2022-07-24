@@ -2,7 +2,7 @@ from flask import Flask, Blueprint
 from flask_session import Session
 from flask_marshmallow import Marshmallow
 from flask_restful import Api, Resource
-from .extentions import db, migrate, login_manager, CORS, cross_origin
+from .extentions import db, migrate, login_manager, CORS, cross_origin,ma
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from taskManager.routes import main
 from taskManager.tests import tests
@@ -32,5 +32,6 @@ def create_app():
     app.config["SESSION_TYPE"] = "filesystem"
     app.config['JSON_AS_ASCII'] = False
     Session(app)
+    ma.init_app(app)
     login_manager.login_view = 'main.login'
     return app
