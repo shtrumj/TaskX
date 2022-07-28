@@ -18,7 +18,7 @@ function myfunc(){
 async function cust_fetch(mySelect) {
     let sel = mySelect
     const response = await fetch(
-        'http://15.21.16.12/it',
+        'http://' + window.location.host + '/it',
         {
             method: 'GET',
             headers: {
