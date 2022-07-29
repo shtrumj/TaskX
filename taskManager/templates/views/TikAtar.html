@@ -1,6 +1,10 @@
 {% extends 'menu.html' %}
-{% block title %}EditCustomers {% endblock %}
+{% block title %}Infrastructure {% endblock %}
+{% block excss %}
+    <link href="../../static/css/TikAtar.css" rel="stylesheet">
+{% endblock %}
 {% block heading %}תיק אתר{% endblock heading %}
+
 
 {%  block content %}
    <div class="container-fluid h-custom text-center" style="vertical-align: top">
@@ -17,6 +21,27 @@
                                 {% endfor %}
                         </select>
                     </form>
+                </div>
+                    <div class="tikAtar">
+                        <div class="hyper1">
+                            <div class="hyperip"> IP 15.21.16.3
+                                <img src="../../static/images/ProxmoxLogo.svg">
+                            </div>
+                            <div class="server"></div>
+                            <div class="server"></div>
+                            <div class="server"></div>
+                            <div class="server"></div>
+                        </div>
+                        <div class="hyper2">
+                            <div class="hyperip">IP 15.21.16.8</div>
+                        </div>
+                        <div class="hyper3">
+                            <div class="hyperip"></div>
+                        </div>
+                        <div class="hyper4">
+                            <div class="hyperip"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
    </div>
