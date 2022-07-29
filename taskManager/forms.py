@@ -40,14 +40,6 @@ class EmployeeForm(FlaskForm):
     submit = SubmitField('הוספת מנהל רשת')
 
 
-# class TasksForm(FlaskForm):
-#     assignTo = SelectField('אחראי משימה', choices=[])
-#     description = StringField('תאור המשימה')
-#     customer = SelectField('שם הלקוח', choices=[])
-#     deadline = DateField('תאריך יעד')
-#     reportTo = SelectField('ממנה משימה', choices=[])
-#     submit = SubmitField('צור משימה')
-
 class TasksForm(FlaskForm):
     assignTo = QuerySelectField('אחראי משימה' ,query_factory=employees_names_query, allow_blank=True)
     description = StringField('תאור המשימה')

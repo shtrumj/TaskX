@@ -8,7 +8,7 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdown">
                 <li><a class="dropdown-item" href="{{ url_for('main.home') }}">בית</a></li>
-                <li><a class="dropdown-item" href="#">הלקוחות שלי</a></li>
+                <li><a class="dropdown-item" href="{{ url_for("main.mycustomers") }}">הלקוחות שלי</a></li>
                 <li><a class="dropdown-item" href="{{ url_for("main.WorkReport") }}">שליחת סיכומי ביקור</a></li>
                 <li><a class="dropdown-item" href="{{url_for("main.addTask")}}">יצירת משימה</a></li>
                 <li><a class="dropdown-item" href="{{url_for("main.addHyper")}}">יצירת שרת מארח</a></li>

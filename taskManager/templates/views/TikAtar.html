@@ -1,0 +1,28 @@
+{% extends 'menu.html' %}
+{% block title %}EditCustomers {% endblock %}
+{% block heading %}תיק אתר{% endblock heading %}
+
+{%  block content %}
+   <div class="container-fluid h-custom text-center" style="vertical-align: top">
+            <div class="row d-flex h-100 text-center justify-content-center">
+
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 text-center " style="vertical-align: top">
+                    <form method="POST" style="vertical-align: top" id="clientForm">
+                        {{ form.hidden_tag() }}
+
+                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="mycustomer" onchange="atar()">
+                              <option selected>אנא בחרו לקוח</option>
+                                {%  for i in customer %}
+                                <option value="{{ i.id }}">{{ i.name }}</option>
+                                {% endfor %}
+                        </select>
+                    </form>
+                </div>
+            </div>
+   </div>
+
+
+
+
+<script src="../static/js/views/tikatar.js" type="text/javascript"></script>
+{%  endblock content %}

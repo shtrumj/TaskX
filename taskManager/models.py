@@ -71,16 +71,20 @@ class Customers(db.Model):
     internalDomain = db.Column(db.String(15))
     externalDomain = db.Column(db.String(20))
     owaAdd = db.Column(db.String(20))
-    sysadmins = db.Column(db.String(30))
+    admin1 = db.Column(db.String(30))
+    admin2 = db.Column(db.String(30), nullable=True)
+    admin3 = db.Column(db.String(30), nullable=True)
 
-    def __init__(self, name, city, address, internalDomain, externalDomain, owaAdd, sysadmins):
+    def __init__(self, name, city, address, internalDomain, externalDomain, owaAdd, admin1, admin2,admin3):
         self.name = name
         self.city = city
         self.address = address
         self.internalDomain = internalDomain
         self.externalDomain = externalDomain
         self.owaAdd = owaAdd
-        self.sysadmins = sysadmins
+        self.admin1 = admin1
+        self.admin2 = admin2
+        self.admin3 = admin3
 
     def __repr__(self):
         return self.name
@@ -93,18 +97,6 @@ class CustomerSchema(ma.SQLAlchemyAutoSchema):
         model = Customers
 customer_schema = CustomerSchema(many=True)
 
-
-#         fields =("id","name","city","address","internalDomain", "externalDomain", "owaAdd", "sysadmins")
-# customer_schema = CustomerSchema(many=True)
-
-    #
-    # name = fields.Str()
-    # city = fields.Str()
-    # address = fields.Str()
-    # internalDomain = fields.Str()
-    # externalDomain = fields.Str()
-    # owaAdd = fields.Str()
-    # sysadmins = fields.Str()
 
 
 
@@ -202,3 +194,9 @@ class Hypervisor(db.Model):
         self.warranty = warranty
         self.physical_ram_in_GB = physical_ram_in_GB
         self.numberOfProcessors = numberOfProcessors
+
+
+class HyperSchema(ma.SQLAlchemyAutoSchema):
+        class Meta:
+            model = Hypervisor
+allHypers = HyperSchema(many=True)

@@ -1,7 +1,7 @@
 import flask
 from flask import Response, json
 from flask import Blueprint, render_template, request, url_for, redirect, flash, session, jsonify
-from taskManager.models import Users, Customers, Employees, Tasks, WorkReports, Hypervisor, employees_query
+from taskManager.models import Users, Customers, Employees, Tasks, WorkReports, Hypervisor, employees_query, allHypers, HyperSchema
 from wtforms import ValidationError
 import re
 from flask_cors import CORS, cross_origin
@@ -267,8 +267,9 @@ def infrastracture():
 
 
 @main.route('/mycustomers',methods=('GET','POST'))
-def mycusotomers():
-    form=Mycustomersform()
+def mycustomers():
+    form = Mycustomersform()
+    hyper = Hypervisor.query.all()
     return render_template('MyCustomers.html', form=form)
 
 
@@ -287,20 +288,25 @@ def editcust():
         owaadd = request.form.get('owaadd')
         customer_id = request.form.get("cid")
         sysadmins = request.form.getlist('sysadmins')
-
-        admini = ''
-        for admin in sysadmins:
-            admini += admin
-            if len(admin) > 1:
-                admin += ','
-        edit_cust = Customers.query.filter_by(id=customer_id).first
-        edit_cust.name = name
-        edit_cust.city = city
-        edit_cust.address = address
-        edit_cust.owaAdd = owaadd
-        edit_cust.internalDomain = internalDomain
-        edit_cust.externalDomain = externalDomain
-        db.session.add(edit_cust)
+        admin = {}
+        counter = 1
+        for admini in sysadmins:
+            selectedadmin = Employees.query.filter_by(id=admini).first()
+            selectedadminemail = selectedadmin.email
+            admin[counter] = selectedadminemail
+            counter += 1
+        # return f'<h3> admin 1 is {admin[1]} and admin2 is {admin[2]}'
+        # edit_cust = Customers.query.filter_by(id=customer_id).first
+        # edit_cust.name = name
+        # edit_cust.city = city
+        # edit_cust.address = address
+        # edit_cust.owaAdd = owaadd
+        # edit_cust.internalDomain = internalDomain
+        # edit_cust.externalDomain = externalDomain
+        # edit_cust.sysadmins = sysadmins
+        edit_customer = Customers(name=name, city=city, address=address, internalDomain=internalDomain, externalDomain= externalDomain, owaAdd=owaadd , admin1=admin[1], admin2=admin[2], admin3=admin[3])
+        return f'<h3>SysAdmin name is {admin[1]} and admin 2 at {admin[2]} and admin3 is {admin[3]}</h3>'
+        db.session.merge(edit_customer)
         db.session.commit()
         flash('דוח נשלח בהצלחה!', category='success')
         # db.session.delete(to_delete)
@@ -309,16 +315,26 @@ def editcust():
 
     return render_template('Edit/EditClients.html', form=form, myform=myform, customer=retcustomer, empoloyees=myemp)
 
+@main.route('/TikAtar',methods=('GET','POST'))
+def tikview():
+    retcustomer = Customers.query.all()
+    form = Mycustomersform()
+    return render_template('views/TikAtar.html', form=form, customer=retcustomer )
 
 @main.route('/it', methods=['GET'])
 # @cross_origin(origin='*',headers=['Content- Type','Authorization'])
 def api_query():
         # result = customers_schema.dumps(all_customers, ensure_ascii=False)
         all_customers = Customers.query.all()
-        almost =jsonify(customer_schema.dump(all_customers))
+        # almost =jsonify(customer_schema.dump(all_customers))
         # return almost
-        return {'data': customer_schema.dump(all_customers)},201
+        return {'data': customer_schema.dump(all_customers)}, 201
 
+
+@main.route('/hypers', methods=['GET'])
+def hyperapi_query():
+        mhypers = Hypervisor.query.all()
+        return {'data': allHypers.dump(mhypers)},201
 
 
 

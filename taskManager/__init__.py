@@ -21,7 +21,7 @@ def create_app():
     app.config['SECRET_KEY'] = 'xncv bjhbhdskc9iu3egbcikeniolwer'
     app.config['CORS_HEADERS'] = 'Content-Type'
     db.init_app(app)
-    migrate.init_app(app, db)
+    migrate.init_app(app, db, render_as_batch=True)
     app.register_blueprint(main)
     login_manager.init_app(app)
     api = Api(app)
