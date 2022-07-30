@@ -84,6 +84,13 @@ class HyperVisorForm(FlaskForm):
     submit = SubmitField('מארח חדש')
 
 
+class ServersForm(FlaskForm):
+    name = StringField('שם השרת')
+    ip_address = SelectField('כתובת IPv4',choices=[])
+    osType = SelectField('סוג מערכת הפעלה', choices=[('1', 'Windows'), ('2', 'Linux')])
+    submit = SubmitField('שרת חדש')
+
+
 class InfraView(FlaskForm):
     customer = QuerySelectField('שם הלקוח', query_factory=customer_query, allow_blank=True)
     submit = SubmitField('בחרתי לקוח')

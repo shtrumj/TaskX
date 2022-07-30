@@ -1,14 +1,14 @@
 import flask
 from flask import Response, json
 from flask import Blueprint, render_template, request, url_for, redirect, flash, session, jsonify
-from taskManager.models import Users, Customers, Employees, Tasks, WorkReports, Hypervisor, employees_query, allHypers, HyperSchema
+from taskManager.models import Users, Customers, Employees, Tasks, WorkReports, Hypervisor, employees_query, allHypers, HyperSchema, hyper_schema
 from wtforms import ValidationError
 import re
 from flask_cors import CORS, cross_origin
 from taskManager.models import customer_schema
 from datetime import datetime
 from flask_login import login_user, login_required, logout_user, current_user
-from taskManager.forms import Loginform, RegistrationForm, CustomersForm, EmployeeForm, TasksForm, HomeSubmit, WorkReportForm, ReportView, HyperVisorForm,InfraView, Mycustomersform
+from taskManager.forms import Loginform, RegistrationForm, CustomersForm, EmployeeForm, TasksForm, HomeSubmit, WorkReportForm, ReportView, HyperVisorForm,InfraView, Mycustomersform, ServersForm
 from taskManager.extensions import db, login_manager
 from sqlalchemy.ext.serializer import loads, dumps
 from flask_cors import CORS, cross_origin
@@ -319,6 +319,14 @@ def tikview():
     form = Mycustomersform()
     return render_template('views/TikAtar.html', form=form, customer=retcustomer )
 
+@main.route('/AddServer', methods=('GET','POST'))
+def addServer():
+    retcustomer = Customers.query.all()
+    hypervisors = Hypervisor.query.all()
+    form = ServersForm()
+    return render_template('create/AddAServer.html', form=form, customer=retcustomer, hyper=hypervisors)
+
+
 @main.route('/it', methods=['GET'])
 # @cross_origin(origin='*',headers=['Content- Type','Authorization'])
 def api_query():
@@ -333,7 +341,5 @@ def api_query():
 def hyperapi_query():
         mhypers = Hypervisor.query.all()
         return {'data': allHypers.dump(mhypers)},201
-
-
 
 

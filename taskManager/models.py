@@ -61,6 +61,16 @@ class Employees(db.Model):
         return str(self.id) + ".  " + self.firstName + " " + str(self.lastName)
 
 
+class Servers(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    createTime = db.Column(db.DateTime, default=datetime.utcnow)
+    name = db.Column(db.String(20), nullable=False)
+    ip_address = db.Column(db.String(20))
+    osType = db.Column(db.String(20))
+    role = db.Column(db.String(150))
+    hyperid = db.Column(db.Integer, db.ForeignKey('hypervisor.id'))
+
+
 class Hypervisor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     createTime = db.Column(db.DateTime, default=datetime.utcnow)
@@ -75,7 +85,7 @@ class Hypervisor(db.Model):
     physical_ram_in_GB = db.Column(db.String(15))
     numberOfProcessors = db.Column(db.String(10))
     custid = db.Column(db.Integer, db.ForeignKey('customers.id'))
-
+    servers = db.relationship('Servers', backref='hypervisor')
     def __init__(self, customer, ip_address, type, status, ilo_address, brand, model, warranty, physical_ram_in_GB,
                  numberOfProcessors, owner):
         self.customer = customer
@@ -89,6 +99,12 @@ class Hypervisor(db.Model):
         self.physical_ram_in_GB = physical_ram_in_GB
         self.numberOfProcessors = numberOfProcessors
         self.owner =owner
+
+class HyperSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Hypervisor
+hyper_schema = HyperSchema(many=True)
+
 class Customers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(10))
