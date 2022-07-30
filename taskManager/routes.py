@@ -9,7 +9,7 @@ from taskManager.models import customer_schema
 from datetime import datetime
 from flask_login import login_user, login_required, logout_user, current_user
 from taskManager.forms import Loginform, RegistrationForm, CustomersForm, EmployeeForm, TasksForm, HomeSubmit, WorkReportForm, ReportView, HyperVisorForm,InfraView, Mycustomersform
-from taskManager.extentions import db, login_manager
+from taskManager.extensions import db, login_manager
 from sqlalchemy.ext.serializer import loads, dumps
 from flask_cors import CORS, cross_origin
 
@@ -237,9 +237,13 @@ def ViewWorkReport():
 
 @main.route('/AddHypervisor', methods=('GET','POST'))
 def addHyper():
+    mycustomer=Customers.query.all()
     form=HyperVisorForm()
     if form.validate_on_submit():
-        customer = str(form.customer.data)
+        customerid = request.form.get('mycustomer')
+        choose = Customers.query.filter_by(id=customerid).first()
+        customer = choose.name
+        # return f'<h1>customer id is {customerid} </h1>'
         ip_address = str(form.ip_address.data)
         ILO_address = str(form.ILO_address.data)
         type = str(form.type.data)
@@ -248,13 +252,16 @@ def addHyper():
         model = str(form.model.data)
         warranty = str(form.warranty.data)
         physical_ram_in_GB = str(form.physical_ram_in_GB.data)
+        # custid = request.form.get('selected')
         numberOfProcessors = form.numberOfProcessors.data
-        new_hypervisor = Hypervisor(customer=customer, ip_address=ip_address, ilo_address=ILO_address, type=type, status=status, brand=brand, model=model, warranty=warranty, physical_ram_in_GB=physical_ram_in_GB, numberOfProcessors=numberOfProcessors)
+        # return f'<h1> custid is {custid}</h1>'
+        new_hypervisor = Hypervisor(customer=customer, ip_address=ip_address, ilo_address=ILO_address, type=type, status=status,
+                                    brand=brand, model=model, warranty=warranty, physical_ram_in_GB=physical_ram_in_GB, numberOfProcessors=numberOfProcessors, owner=choose)
         db.session.add(new_hypervisor)
         db.session.commit()
         flash('מארח  נוצר בהצלחה!', category='success')
         return redirect((url_for('main.addHyper')))
-    return render_template('AddAnHypervisor.html', form=form)
+    return render_template('AddAnHypervisor.html', form=form, customer=mycustomer)
 
 
 @main.route('/infra',methods=('GET','POST'))
@@ -295,15 +302,6 @@ def editcust():
             selectedadminemail = selectedadmin.email
             admin[counter] = selectedadminemail
             counter += 1
-        # return f'<h3> admin 1 is {admin[1]} and admin2 is {admin[2]}'
-        # edit_cust = Customers.query.filter_by(id=customer_id).first
-        # edit_cust.name = name
-        # edit_cust.city = city
-        # edit_cust.address = address
-        # edit_cust.owaAdd = owaadd
-        # edit_cust.internalDomain = internalDomain
-        # edit_cust.externalDomain = externalDomain
-        # edit_cust.sysadmins = sysadmins
         edit_customer = Customers(name=name, city=city, address=address, internalDomain=internalDomain, externalDomain= externalDomain, owaAdd=owaadd , admin1=admin[1], admin2=admin[2], admin3=admin[3])
         return f'<h3>SysAdmin name is {admin[1]} and admin 2 at {admin[2]} and admin3 is {admin[3]}</h3>'
         db.session.merge(edit_customer)

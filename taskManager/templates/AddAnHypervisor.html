@@ -1,5 +1,5 @@
 {% extends 'menu.html' %}
-{% block title %}AddATask {% endblock %}
+{% block title %}AddAnHypervisor {% endblock %}
 {% block heading %} הוספת שרת מארח{% endblock heading %}
 
 {%  block content %}
@@ -7,7 +7,6 @@
 
    <div class="container-fluid h-custom">
             <div class="row d-flex justify-content-center align-items-center h-100">
-
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                     <form method="POST">
                         {{ form.hidden_tag() }}
@@ -15,9 +14,13 @@
                             <p class="text-center fw-bold mx-3 mb-0"></p>
                         </div>
                         <div class="form-outline sm-4 ">
-                            {{ form.customer.label(class_="form-label") }}
-                            </br>
-                           {{ form.customer(class_="form-control") }}
+                        <select name="mycustomer" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="mycustomer" onchange="myfunc()">
+                              <option name="selected">אנא בחרו לקוח</option>
+                                {%  for i in customer %}
+                                <option value="{{ i.id }}">{{ i.name }}</option>
+                                {% endfor %}
+                        </select>
+
                         </div>
                         <div class="form-outline sm-4 ">
                             {{ form.ip_address.label(class_="form-label") }}

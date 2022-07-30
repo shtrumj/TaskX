@@ -3,17 +3,13 @@
 {% block excss %}
     <link href="../../static/css/TikAtar.css" rel="stylesheet">
 {% endblock %}
-{% block heading %}תיק אתר{% endblock heading %}
-
+{#{% block heading %}תיק אתר{% endblock heading %}#}
 
 {%  block content %}
    <div class="container-fluid h-custom text-center" style="vertical-align: top">
-            <div class="row d-flex h-100 text-center justify-content-center">
-
-                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 text-center " style="vertical-align: top">
+            <div class="row d-flex text-center justify-content-center">
                     <form method="POST" style="vertical-align: top" id="clientForm">
                         {{ form.hidden_tag() }}
-
                         <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="mycustomer" onchange="atar()">
                               <option selected>אנא בחרו לקוח</option>
                                 {%  for i in customer %}
@@ -21,11 +17,14 @@
                                 {% endfor %}
                         </select>
                     </form>
-                </div>
                     <div class="tikAtar">
                         <div class="hyper1">
-                            <div class="hyperip"> IP 15.21.16.3
-                                <img src="../../static/images/ProxmoxLogo.svg">
+                            <div class="hypervisor">
+                                <div class="ipadd">15.21.16.3</div>
+                                <div class="iloadd">15.21.16.239</div>
+                                <div class="image">
+                                    <img src="../../static/images/ProxmoxLogo.svg" id="proxmox">
+                                </div>
                             </div>
                             <div class="server"></div>
                             <div class="server"></div>

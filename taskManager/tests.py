@@ -3,7 +3,7 @@ from taskManager.models import Users, Customers, Employees, Tasks
 from wtforms import ValidationError
 from flask_login import login_user, login_required, logout_user, current_user
 from taskManager.forms import Loginform, RegistrationForm, CustomersForm, EmployeeForm, TasksForm
-from taskManager.extentions import db, login_manager
+from taskManager.extensions import db, login_manager
 from werkzeug.security import generate_password_hash
 import sqlite3
 

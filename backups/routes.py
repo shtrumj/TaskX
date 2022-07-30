@@ -6,7 +6,7 @@ import json
 from datetime import datetime
 from flask_login import login_user, login_required, logout_user, current_user
 from taskManager.forms import Loginform, RegistrationForm, CustomersForm, EmployeeForm, TasksForm, HomeSubmit, WorkReportForm, ReportView, HyperVisorForm,InfraView
-from taskManager.extentions import db, login_manager
+from taskManager.extensions import db, login_manager
 from sqlalchemy.ext.serializer import loads, dumps
 
 from flask_session import Session

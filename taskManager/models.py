@@ -1,5 +1,5 @@
 import app
-from .extentions import db, login_manager,ma
+from .extensions import db, login_manager,ma
 from flask_login import UserMixin
 from datetime import datetime
 from marshmallow import Schema, fields
@@ -7,8 +7,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from marshmallow import Schema, fields, ValidationError, pre_load
 from sqlalchemy.ext.mutable import MutableList
 from sqlalchemy.types import ARRAY
-
-
 
 def employees_names_query():
     query = Employees.query.all()
@@ -50,7 +48,7 @@ class Employees(db.Model):
     lastName = db.Column(db.TEXT)
     email = db.Column(db.String(25), unique=True)
     phone = db.Column(db.TEXT)
-    customers = db.relationship('Customers', secondary=EmployeeSysadmin, backref='administrators')
+    customer = db.relationship('Customers', secondary=EmployeeSysadmin, backref='administrators')
     # tasks = db.relationship('Tasks', backref='employee', lazy=True)
 
     def __init__(self, firstName, lastName, email, phone):
@@ -63,6 +61,34 @@ class Employees(db.Model):
         return str(self.id) + ".  " + self.firstName + " " + str(self.lastName)
 
 
+class Hypervisor(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    createTime = db.Column(db.DateTime, default=datetime.utcnow)
+    customer = db.Column(db.String(20))
+    ip_address = db.Column(db.String(20))
+    type = db.Column(db.String(30))
+    status = db.Column(db.String(25))  # active /not active
+    ilo_address = db.Column(db.String(20))
+    brand = db.Column(db.String(15))
+    model = db.Column(db.String(15))
+    warranty = db.Column(db.String(15))
+    physical_ram_in_GB = db.Column(db.String(15))
+    numberOfProcessors = db.Column(db.String(10))
+    custid = db.Column(db.Integer, db.ForeignKey('customers.id'))
+
+    def __init__(self, customer, ip_address, type, status, ilo_address, brand, model, warranty, physical_ram_in_GB,
+                 numberOfProcessors, owner):
+        self.customer = customer
+        self.ip_address = ip_address
+        self.type = type
+        self.status = status
+        self.ilo_address = ilo_address
+        self.brand = brand
+        self.model = model
+        self.warranty = warranty
+        self.physical_ram_in_GB = physical_ram_in_GB
+        self.numberOfProcessors = numberOfProcessors
+        self.owner =owner
 class Customers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(10))
@@ -74,6 +100,7 @@ class Customers(db.Model):
     admin1 = db.Column(db.String(30))
     admin2 = db.Column(db.String(30), nullable=True)
     admin3 = db.Column(db.String(30), nullable=True)
+    hypervisors = db.relationship('Hypervisor', backref='owner')
 
     def __init__(self, name, city, address, internalDomain, externalDomain, owaAdd, admin1, admin2,admin3):
         self.name = name
@@ -96,9 +123,6 @@ class CustomerSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Customers
 customer_schema = CustomerSchema(many=True)
-
-
-
 
 
 class Tasks(db.Model):
@@ -168,32 +192,6 @@ def employees_query():
     return query
 
 
-class Hypervisor(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    createTime = db.Column(db.DateTime, default=datetime.utcnow)
-    customer = db.Column(db.String(20))
-    ip_address = db.Column(db.String(20))
-    type = db.Column(db.String(30))
-    status = db.Column(db.String(25))  # active /not active
-    ilo_address = db.Column(db.String(20))
-    brand = db.Column(db.String(15))
-    model = db.Column(db.String(15))
-    warranty = db.Column(db.String(15))
-    physical_ram_in_GB = db.Column(db.String(15))
-    numberOfProcessors = db.Column(db.String(10))
-
-    def __init__(self, customer, ip_address, type, status, ilo_address, brand, model, warranty, physical_ram_in_GB,
-                 numberOfProcessors):
-        self.customer = customer
-        self.ip_address = ip_address
-        self.type = type
-        self.status = status
-        self.ilo_address = ilo_address
-        self.brand = brand
-        self.model = model
-        self.warranty = warranty
-        self.physical_ram_in_GB = physical_ram_in_GB
-        self.numberOfProcessors = numberOfProcessors
 
 
 class HyperSchema(ma.SQLAlchemyAutoSchema):
