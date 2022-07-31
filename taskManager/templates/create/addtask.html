@@ -1,4 +1,8 @@
-{% extends 'menu.html' %}
+{% if admin.admin == True %}
+    {% extends 'admin_menu.html' %}
+{% else %}
+    {% extends 'menu.html' %}
+{% endif %}
 {% block title %}AddATask {% endblock %}
 {% block heading %} הוספת משימה{% endblock heading %}
 

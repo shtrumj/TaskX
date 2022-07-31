@@ -3,11 +3,15 @@
 {% block excss %}{% endblock excss %}
 
 
-<h1>{% block heading %}{% endblock %}</h1>
 {% block menu %}{% endblock menu %}
-{% block content %}{% endblock content %}
+
+    <div class="container-fluid">
+        {% block heading %}{% endblock %}
+    </div>
+{% block content %}
+{% endblock content %}
 {% block footer %}
-    <div id="footer" class="h-100 d-flex flex-column justify-content-end text-md-end  py-4 px-4 px-xl-5 bg-primary">
+    <div id="footer" class="shadow h-100 d-flex flex-column justify-content-end text-md-end  py-4 px-4 px-xl-5 bg-primary rounded">
         <!-- Copyright -->
         <div class="text-white mb-3 mb-md-0">
             Copyright TROT LTD© 2022. All rights reserved.

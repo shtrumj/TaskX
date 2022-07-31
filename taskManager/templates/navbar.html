@@ -1,76 +1,77 @@
-<div class="btn-group">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropdown
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-  </ul>
-</div>
+{% extends'formBase.html' %}
+{% block excss %}{% endblock excss %}
+{% block menu %}
+{#    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">#}
 
-<div class="btn-group">
-  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    Right-aligned menu
-  </button>
-  <ul class="dropdown-menu dropdown-menu-end">
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-  </ul>
-</div>
+<nav class="navbar navbar-light fixed-top navbar-expand-md bg-primary shadow navbar-dark bg-faded black">
+<a
+        href="#"
+        class="navbar-brand mb-0 h1 d-block align-top  pull-left navbar-inner text-center">
+            Task{-IT-}
+</a>
+    <button
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            class="navbar-toggler"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+    >
+        <span class="navbar-toggler-icon"></span>
+    </button>
+<div class="collapse navbar-collapse"
+    id="navbarNav">
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a href="{{ url_for('main.home') }}" class="nav-link active">
+                <img src="../static/images/icons8-home-100.svg" class="img-fluid rounded mx-auto d-inline-block" style="height: 30px;">&nbsp;
+                בית
+             </a>
+        </li>
+        <li class="nav-item active dropdown">
+            <a href="#" class="nav-link active
+               dropdown-toggle"
+               id="navbarDropdown" role="button"
+               data-bs-toggle="dropdown"
+               aria-expanded="false"
+            >
+                <img src="../static/images/icons8-office-96.png" class="img-fluid rounded mx-auto d-inline-block" style="height: 30px;">
+                לקוחות
+             </a>
+            <ul class="dropdown-menu"
+            aria-labelledby="navbarDropdown">
+                <li><a href="{{ url_for('main.mycustomers') }}"
+                   class="dropdown-item">הלקוחות שלי</a> </li>
+                <li><a href="{{ url_for('main.tikview') }}"
+                   class="dropdown-item">תיקי אתר</a> </li>
+                <li><a href="{{ url_for('main.addCustomer') }}"
+                   class="dropdown-item">יצירת לקוח</a> </li>
+                <li><a href="{{ url_for('main.editcust') }}"
+                   class="dropdown-item">עריכת לקוח</a> </li>
 
-<div class="btn-group">
-  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-    Left-aligned, right-aligned lg
-  </button>
-  <ul class="dropdown-menu dropdown-menu-lg-end">
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-  </ul>
+            </ul>
+        </li>
+            <li class="nav-item active">
+                <a href="{{ url_for('main.home') }}" class="nav-link active">
+                <img src="../static/images/icons8-todo-list-96.png" class="img-fluid rounded mx-auto d-inline-block" style="height: 30px;">
+                משימות
+             </a>
+            </li>
+            <li class="nav-item active">
+                <a href="{{ url_for('main.home') }}" class="nav-link active">
+                <img src="../static/images/icons8-technical-support-64.png" class="img-fluid rounded mx-auto d-inline-block" style="height: 30px;">
+                תמיכה
+             </a>
+            </li>
+                <li class="nav-item active">
+                <a href="{{ url_for('main.home') }}" class="nav-link active">
+                <img src="../static/images/icons8-settings-96.png" class="img-fluid rounded mx-auto d-inline-block" style="height: 30px;">
+                הגדרות
+             </a>
+            </li>
+    </ul>
 </div>
+</nav>
 
-<div class="btn-group">
-  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-    Right-aligned, left-aligned lg
-  </button>
-  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-  </ul>
-</div>
-
-<div class="btn-group dropstart">
-  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropstart
-  </button>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-  </ul>
-</div>
-
-<div class="btn-group dropend">
-  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropend
-  </button>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-  </ul>
-</div>
-
-<div class="btn-group dropup">
-  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropup
-  </button>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-    <li><a class="dropdown-item" href="#">Menu item</a></li>
-  </ul>
-</div>
+{% endblock menu%}

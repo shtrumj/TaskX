@@ -1,6 +1,8 @@
-{% extends 'menu.html' %}
+{% extends 'navbar.html' %}
 {% block title %}EditCustomers {% endblock %}
-{% block heading %}עריכת לקוחות{% endblock heading %}
+{% block heading %}
+    <h1>עריכת לקוח</h1>
+{% endblock heading %}
 
 {%  block content %}
 
@@ -14,7 +16,7 @@
            const custowaadd = '{{ customer.owaAdd }}'
        </script>
    <div class="container-fluid h-custom text-center" style="vertical-align: top">
-            <div class="row d-flex h-100 text-center justify-content-center">
+            <div class="row d-flex text-center justify-content-center">
 
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 text-center " style="vertical-align: top">
                     <form method="POST" style="vertical-align: top" id="clientForm">
@@ -27,14 +29,6 @@
                                 {% endfor %}
                             </select>
 
-
-{#                          <div class="dropdown btn-group">#}
-{#                        <div class="form-outline sm-3 text-center dropdown p-3 mb-2 bg-primary text-dark" style="vertical-align: top; border-radius: 15px;">#}
-{#                            {{ myform.mycustomer.label(class_="form-label")}}#}
-{#                            </br>#}
-{#                            {{ myform.mycustomer(onchange="myfunc()")}}#}
-{#                        </div>#}
-{#                        </div>#}
                         <div class="name"></div>
                         <div class="city"></div>
                         <div class="address"></div>
@@ -73,18 +67,18 @@
                             </br>
                             {{ form.internalDomain(class_="form-control") }}
                         </div>
-                        <div class="form-outline sm-3">
+                        <div class="form-outline col-xs-2">
                             {{ form.externalDomain.label(class_="form-label") }}
                             </br>
                             {{ form.externalDomain(class_="form-control") }}
                         </div>
-                        <div class="form-outline sm-3">
-                            {{ form.owaadd.label(class_="form-label form-group-lg input-group-lg") }}
+                        <div class="form-group row">
+                            <div class="col-xs-4">
+                            {{ form.owaadd.label(class_="form-label") }}
                             </br>
-                            {{ form.owaadd(class_="form-control form-group-lg input-group-lg") }}
+                            {{ form.owaadd(class_="form-control mb-3") }}
+                            </div>
                         </div>
-{#                        <input name="cid" id="cid"> {{ customer.id }} </input>#}
-{#                        <br>#}
                         <select class="form-outline sm-3 form-control" multiple aria-label="multiple select example" name="sysadmins" id="sysadmins">
                           <option selected>מנהלי רשת</option>
                             {% for admin in empoloyees %}
@@ -99,7 +93,6 @@
                     </form>
                 </div>
                 </div>
-            </div>
             </div>
    </div>
     <script type="text/javascript" src="../../static/EditCustomerts.js">

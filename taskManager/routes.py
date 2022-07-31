@@ -125,7 +125,7 @@ def addCustomer():
         db.session.commit()
         flash('לקוח נוצר בהצלחה!', category='success')
         return redirect(url_for('main.addCustomer'))
-    return render_template('addcustomer.html', form=form, empoloyees=myemp, admin=admin)
+    return render_template('create/addcustomer.html', form=form, empoloyees=myemp, admin=admin)
 
 
 @main.route('/addEmployee', methods=('GET', 'POST'))
@@ -152,6 +152,8 @@ def addEmployee():
 @login_required
 def addTask():
     form = TasksForm()
+    email = session['email']
+    admin = Users.query.filter_by(email=email).first_or_404()
     if form.validate_on_submit():
         description = str(form.description.data)
         customer = str(form.customer.data)
@@ -169,7 +171,7 @@ def addTask():
         db.session.commit()
         flash('משימה נוצרה בהצלחה!', category='success')
         return redirect(url_for('main.addTask'))
-    return render_template('addtask.html', form=form)
+    return render_template('create/addtask.html', form=form, admin=admin)
 
 
 @main.route('/logout')
@@ -183,6 +185,8 @@ def logout():
 def WorkReport():
     username = session['username']
     form= WorkReportForm()
+    email = session['email']
+    admin = Users.query.filter_by(email=email).first_or_404()
     if form.validate_on_submit():
         customer = str(form.customer.data)
         client= str(form.client.data)
@@ -199,7 +203,7 @@ def WorkReport():
         db.session.commit()
         flash('דוח נשלח בהצלחה!', category='success')
         return redirect((url_for('main.WorkReport')))
-    return render_template('WorkReport.html', form=form )
+    return render_template('create/WorkReport.html', form=form, admin=admin )
 
 @main.route('/addWorkReport', methods=('GET', 'POST'))
 def addWorkReport():
@@ -285,6 +289,8 @@ def editcust():
     myemp = Employees.query.all()
     myform = Mycustomersform()
     form = CustomersForm()
+    admin = []
+    counter = 1
     retcustomer = Customers.query.all()
     if request.method == 'POST':
         name = request.form.get('name')
@@ -295,15 +301,20 @@ def editcust():
         owaadd = request.form.get('owaadd')
         customer_id = request.form.get("cid")
         sysadmins = request.form.getlist('sysadmins')
-        admin = {}
-        counter = 1
+        if len(sysadmins)>3:
+            return "<h1>Too many admins</h1>"
         for admini in sysadmins:
-            selectedadmin = Employees.query.filter_by(id=admini).first()
-            selectedadminemail = selectedadmin.email
-            admin[counter] = selectedadminemail
-            counter += 1
-        edit_customer = Customers(name=name, city=city, address=address, internalDomain=internalDomain, externalDomain= externalDomain, owaAdd=owaadd , admin1=admin[1], admin2=admin[2], admin3=admin[3])
-        return f'<h3>SysAdmin name is {admin[1]} and admin 2 at {admin[2]} and admin3 is {admin[3]}</h3>'
+            admin.append(admini)
+        if len(sysadmins) == 3:
+            edit_customer = Customers(name=name, city=city, address=address, internalDomain=internalDomain, externalDomain= externalDomain, owaAdd=owaadd , admin1=admin[0], admin2=admin[1], admin3=admin[2])
+        if len(sysadmins) == 2:
+            edit_customer = Customers(name=name, city=city, address=address, internalDomain=internalDomain,
+                                      externalDomain=externalDomain, owaAdd=owaadd, admin1=admin[0], admin2=admin[1])
+        if len(sysadmins) == 1:
+            Customers(name=name, city=city, address=address, internalDomain=internalDomain,
+                      externalDomain=externalDomain, owaAdd=owaadd, admin1=admin[0])
+
+        # return f'<h3>SysAdmin name is {admin[0]} and admin 2 at {admin[1]} and admin3 is {admin[2]}</h3>'
         db.session.merge(edit_customer)
         db.session.commit()
         flash('דוח נשלח בהצלחה!', category='success')
@@ -311,7 +322,7 @@ def editcust():
         # db.session.commit()
         return redirect((url_for('main.editcust')))
 
-    return render_template('Edit/EditClients.html', form=form, myform=myform, customer=retcustomer, empoloyees=myemp)
+    return render_template('Edit/EditCustomer.html', form=form, myform=myform, customer=retcustomer, empoloyees=myemp)
 
 @main.route('/TikAtar',methods=('GET','POST'))
 def tikview():

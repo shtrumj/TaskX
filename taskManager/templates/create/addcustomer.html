@@ -1,10 +1,9 @@
-{% if admin.admin == True %}
-    {% extends 'admin_menu.html' %}
-{% else %}
-    {% extends 'menu.html' %}
-{% endif %}
+{%  extends 'navbar.html'
+        %}
 {% block title %}AddCustomer {% endblock %}
-{% block heading %} הוספת לקוח{% endblock heading %}
+{% block heading %}
+<h1>יצירת לקוח</h1>
+{% endblock heading %}
 
 {%  block content %}
 
