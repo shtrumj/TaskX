@@ -23,8 +23,8 @@
             <li><a class="dropdown-item" href="{{ url_for("main.WorkReport") }}">שליחת סיכומי ביקור</a></li>
 
             <li class="dropdown dropend">
-                <a class="dropdown-item dropdown-toggle dropdown-menu-left" href="#" id="multilevelDropdownMenu1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">מסכי עריכה</a>
-                <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="multilevelDropdownMenu1" style="float: left;">
+                <a class="dropdown-item dropdown-toggle dropdown-menu-right" href="#" id="multilevelDropdownMenu1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">מסכי עריכה</a>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="multilevelDropdownMenu1" style="float: right;">
                     <li><a class="dropdown-item" href="{{url_for("main.editcust")}}">עריכת לקוחות</a></li>
                     <li><a class="dropdown-item" href="{{url_for("main.logout")}}">עריכת עובדים</a></li>
                     <li><a class="dropdown-item" href="{{url_for("main.addCustomer")}}">הוספת לקוח</a></li>
@@ -40,7 +40,7 @@
                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                 </ul>
             </li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item dropdown-toggle dropdown-menu-right" href="#">מסכי יצירת אובייקטים</a></li>
         </ul>
     </div>
 <script src="../static/multilevelMenu.js" type="text/javascript"></script>

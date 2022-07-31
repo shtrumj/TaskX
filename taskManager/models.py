@@ -48,7 +48,7 @@ class Employees(db.Model):
     lastName = db.Column(db.TEXT)
     email = db.Column(db.String(25), unique=True)
     phone = db.Column(db.TEXT)
-    customer = db.relationship('Customers', secondary=EmployeeSysadmin, backref='administrators')
+    # customer = db.relationship('Customers', secondary=EmployeeSysadmin, backref='administrators')
     # tasks = db.relationship('Tasks', backref='employee', lazy=True)
 
     def __init__(self, firstName, lastName, email, phone):

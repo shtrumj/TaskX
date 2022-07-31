@@ -1,5 +1,12 @@
-let mycustomer = document.getElementById("mycustomer");
-let myselect= mycustomer.value;
+function myfunc(){
+    let mycustomer = document.getElementById("mycustomer");
+    let myselect= mycustomer.value;
+    // console.log("i have choose customer nuimber " + myselect)
+    hyperfetch()
+
+}
+
+
 
 
 async function hyperfetch(){
