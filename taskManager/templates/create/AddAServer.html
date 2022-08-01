@@ -7,7 +7,7 @@
 {%  block content %}
 
    <div class="container-fluid h-custom">
-            <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="row d-flex justify-content-center align-items-center  h-100">
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                     <form method="POST">
                         {{ form.hidden_tag() }}
@@ -45,9 +45,12 @@
                             {{ form.osType(class_="form-control") }}
                         </div>
                         <div class="form-outline sm-4 ">
-                            {{ form.roles.label(class_="form-label") }}
-                            </br>
-                            {{ form.roles(class_="form-control") }}
+                         <label class="form-label" for="roles">תפקידי השרת:</label>
+                            <select name="roles" id="roleSelect" multiple class="form-select col align-items-center" style="direction: ltr;">
+                                {% for role in form.roles %}
+                                <option value="{{ role }}">{{ role }}</option>
+                                {%  endfor %}
+                            </select>
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">
