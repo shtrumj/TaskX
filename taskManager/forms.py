@@ -89,6 +89,14 @@ class ServersForm(FlaskForm):
     name = StringField('שם השרת')
     ip_address = StringField('כתובת IPv4')
     osType = SelectField('סוג מערכת הפעלה', choices=[('1', 'Windows'), ('2', 'Linux')])
+    roles = SelectMultipleField('תפקידים',choices=[
+        ('1','AdciveDirectory'),
+        ('2','AntivirusConsole'),
+        ('3','DHCP'),
+        ('4','DNS'),
+        ('5','SQL'),
+        ('6','Exchange')
+    ])
     submit = SubmitField('שרת חדש')
 
 

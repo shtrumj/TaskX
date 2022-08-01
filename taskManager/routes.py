@@ -338,6 +338,7 @@ def addServer():
     retcustomer = Customers.query.all()
     hypervisors = Hypervisor.query.all()
     form = ServersForm()
+    # if request.method == 'POST':
     return render_template('create/AddAServer.html', form=form, customer=retcustomer, hyper=hypervisors)
 
 

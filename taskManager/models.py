@@ -70,7 +70,14 @@ class Servers(db.Model):
     ip_address = db.Column(db.String(20))
     osType = db.Column(db.String(20))
     role = db.Column(db.String(150))
-    hyperid = db.Column(db.Integer, db.ForeignKey('hypervisor.id'))
+    remarks = db.Column(db.String(20))
+    hyper_id = db.Column(db.Integer, db.ForeignKey('hypervisor.id'))
+
+    def __init__(self,name, ip_address, osType, role, remarks):
+        self.ip_address = ip_address
+        self.osType = osType
+        self.role = role
+        self.remarks = remarks
 
 
 class Hypervisor(db.Model):
