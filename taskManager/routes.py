@@ -245,8 +245,10 @@ def addHyper():
     form=HyperVisorForm()
     if form.validate_on_submit():
         customerid = request.form.get('mycustomer')
+        # return f'<h1>{customerid}</h1>'
         choose = Customers.query.filter_by(id=customerid).first()
         customer = choose.name
+        # return f'<h1>{customer}</h1>'
         # return f'<h1>customer id is {customerid} </h1>'
         ip_address = str(form.ip_address.data)
         ILO_address = str(form.ILO_address.data)
@@ -258,14 +260,15 @@ def addHyper():
         physical_ram_in_GB = str(form.physical_ram_in_GB.data)
         # custid = request.form.get('selected')
         numberOfProcessors = form.numberOfProcessors.data
+        serialNumber = str(form.serialNumber.data)
         # return f'<h1> custid is {custid}</h1>'
         new_hypervisor = Hypervisor(customer=customer, ip_address=ip_address, ilo_address=ILO_address, type=type, status=status,
-                                    brand=brand, model=model, warranty=warranty, physical_ram_in_GB=physical_ram_in_GB, numberOfProcessors=numberOfProcessors, owner=choose)
+                                    brand=brand, model=model, warranty=warranty, physical_ram_in_GB=physical_ram_in_GB, numberOfProcessors=numberOfProcessors, owner=choose, serialNumber=serialNumber)
         db.session.add(new_hypervisor)
         db.session.commit()
         flash('מארח  נוצר בהצלחה!', category='success')
         return redirect((url_for('main.addHyper')))
-    return render_template('AddAnHypervisor.html', form=form, customer=mycustomer)
+    return render_template('create/AddAnHypervisor.html', form=form, customer=mycustomer)
 
 
 @main.route('/infra',methods=('GET','POST'))

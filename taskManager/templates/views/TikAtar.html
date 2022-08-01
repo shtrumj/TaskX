@@ -10,7 +10,7 @@
             <div class="row d-flex text-center justify-content-center">
                     <form method="POST" style="vertical-align: top" id="clientForm">
                         {{ form.hidden_tag() }}
-                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="mycustomer" onchange="atar()">
+                        <select class="form-select form-select-lg mb-5" aria-label=".form-select-lg example" id="mycustomer" onchange="atar()">
                               <option selected>אנא בחרו לקוח</option>
                                 {%  for i in customer %}
                                 <option value="{{ i.id }}">{{ i.name }}</option>

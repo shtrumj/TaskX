@@ -1,5 +1,5 @@
 import app
-from .extensions import db, login_manager,ma
+from .extensions import db, login_manager, ma
 from flask_login import UserMixin
 from datetime import datetime
 from marshmallow import Schema, fields
@@ -7,6 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from marshmallow import Schema, fields, ValidationError, pre_load
 from sqlalchemy.ext.mutable import MutableList
 from sqlalchemy.types import ARRAY
+
 
 def employees_names_query():
     query = Employees.query.all()
@@ -48,6 +49,7 @@ class Employees(db.Model):
     lastName = db.Column(db.TEXT)
     email = db.Column(db.String(25), unique=True)
     phone = db.Column(db.TEXT)
+
     # customer = db.relationship('Customers', secondary=EmployeeSysadmin, backref='administrators')
     # tasks = db.relationship('Tasks', backref='employee', lazy=True)
 
@@ -82,12 +84,14 @@ class Hypervisor(db.Model):
     brand = db.Column(db.String(15))
     model = db.Column(db.String(15))
     warranty = db.Column(db.String(15))
+    serialNumber = db.Column(db.String(20))
     physical_ram_in_GB = db.Column(db.String(15))
     numberOfProcessors = db.Column(db.String(10))
     custid = db.Column(db.Integer, db.ForeignKey('customers.id'))
     servers = db.relationship('Servers', backref='hypervisor')
+
     def __init__(self, customer, ip_address, type, status, ilo_address, brand, model, warranty, physical_ram_in_GB,
-                 numberOfProcessors, owner):
+                 numberOfProcessors, owner, serialNumber):
         self.customer = customer
         self.ip_address = ip_address
         self.type = type
@@ -98,12 +102,17 @@ class Hypervisor(db.Model):
         self.warranty = warranty
         self.physical_ram_in_GB = physical_ram_in_GB
         self.numberOfProcessors = numberOfProcessors
-        self.owner =owner
+        self.owner = owner
+        self.serialNumber = serialNumber
+
 
 class HyperSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Hypervisor
+
+
 hyper_schema = HyperSchema(many=True)
+
 
 class Customers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -118,7 +127,7 @@ class Customers(db.Model):
     admin3 = db.Column(db.String(30), nullable=True)
     hypervisors = db.relationship('Hypervisor', backref='owner')
 
-    def __init__(self, name, city, address, internalDomain, externalDomain, owaAdd, admin1, admin2,admin3):
+    def __init__(self, name, city, address, internalDomain, externalDomain, owaAdd, admin1, admin2, admin3):
         self.name = name
         self.city = city
         self.address = address
@@ -138,6 +147,8 @@ class Customers(db.Model):
 class CustomerSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Customers
+
+
 customer_schema = CustomerSchema(many=True)
 
 
@@ -203,14 +214,22 @@ def bosses_names_query():
     query = db.session.query(Employees).all()
     return query
 
+
 def employees_query():
     query = db.session.query(Employees).all()
     return query
 
 
-
-
 class HyperSchema(ma.SQLAlchemyAutoSchema):
-        class Meta:
-            model = Hypervisor
+    class Meta:
+        fields = (
+            "customer",
+            "id",
+            "custid",
+            "ip_address"
+        )
+        # model = Hypervisor
+
+
+
 allHypers = HyperSchema(many=True)

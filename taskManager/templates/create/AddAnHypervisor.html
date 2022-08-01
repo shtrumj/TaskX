@@ -1,4 +1,5 @@
-{% extends 'menu.html' %}
+{%  extends 'navbar.html' %}
+
 {% block title %}AddAnHypervisor {% endblock %}
 {% block heading %} הוספת שרת מארח{% endblock heading %}
 
@@ -67,6 +68,11 @@
                             </br>
                             {{ form.numberOfProcessors(class_="form-control") }}
                         </div>
+                        <div class="form-outline col-sm-4">
+                            {{ form.serialNumber.label(class_="form-label", id="SerialNumber") }}
+                            </br>
+                            {{ form.serialNumber(class_="form-control") }}
+                        </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">
                             {{ form.submit(class_="btn btn-primary btn-lg")}}
@@ -85,6 +91,6 @@
 {#    <script type="text/javascript" extdomain = myFunc({{extDomains|tojson}})></script>#}
 {#    <script src="../static/dynamic.js"></script>#}
 {#    <script src="../static/workReport.js"></script>#}
-    <script src="../../static/Email2Domain.js"></script>
+{#    <script src="../../static/Email2Domain.js"></script>#}
 
 {% endblock content %}

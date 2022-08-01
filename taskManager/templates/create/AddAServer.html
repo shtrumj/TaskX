@@ -1,6 +1,8 @@
-{% extends 'menu.html' %}
+{%  extends 'navbar.html' %}
 {% block title %}AddAServer {% endblock %}
-{% block heading %} הוספת שרת שרת{% endblock heading %}
+{% block heading %}
+<h1>הוספת שרת לוגי</h1>
+{% endblock heading %}
 
 {%  block content %}
 
@@ -19,11 +21,11 @@
                                 <option value="{{ i.id }}">{{ i.name }}</option>
                                 {% endfor %}
                         </select>
-                            <select name="hypervisor" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="hypervisor" onchange="myfunc()">
-                              <option name="selected">אנא בחרו שרת מארח</option>
-                                {%  for i in hyper %}
-                                <option value="{{ i.id }}">{{ i.ip_address }}</option>
-                                {% endfor %}
+                            <select name="hypervisor" id="ips"class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="hypervisor" onchange="myfunc()">
+                              <option name="selected" id="options">אנא בחרו שרת מארח</option>
+{#                                {%  for i in hyper %}#}
+{#                                <option value="{{ i.id }}">{{ i.ip_address }}</option>#}
+{#                                {% endfor %}#}
                         </select>
 
                         </div>
@@ -55,6 +57,9 @@
             </div>
    </div>
 
-    <script src="../../static/js/create/addServer.js"></script>
+    <script
+            src="../../static/js/create/addServer.js">
+
+    </script>
 
 {% endblock content %}

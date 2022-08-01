@@ -81,12 +81,13 @@ class HyperVisorForm(FlaskForm):
     warranty = DateField('תאריך פקיעת אחריות')
     physical_ram_in_GB = IntegerField('כמות זכרון פיזי ב GB')
     numberOfProcessors = StringField('מספר מעבדים')
+    serialNumber = StringField('מספר סידורי')
     submit = SubmitField('מארח חדש')
 
 
 class ServersForm(FlaskForm):
     name = StringField('שם השרת')
-    ip_address = SelectField('כתובת IPv4',choices=[])
+    ip_address = StringField('כתובת IPv4')
     osType = SelectField('סוג מערכת הפעלה', choices=[('1', 'Windows'), ('2', 'Linux')])
     submit = SubmitField('שרת חדש')
 

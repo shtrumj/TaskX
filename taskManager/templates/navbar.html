@@ -3,7 +3,7 @@
 {% block menu %}
 {#    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">#}
 
-<nav class="navbar navbar-light fixed-top navbar-expand-md bg-primary shadow navbar-dark bg-faded black">
+<nav class="navbar fixed-top navbar-expand-md bg-primary shadow navbar-dark bg-faded black">
 <a
         href="#"
         class="navbar-brand mb-0 h1 d-block align-top  pull-left navbar-inner text-center">
@@ -52,6 +52,26 @@
 
             </ul>
         </li>
+        <li class="nav-item active dropdown">
+            <a href="#" class="nav-link active
+                dropdown-toggle"
+                id="navbarTikDown" role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >
+                <img src="../static/images/icons8-computer-64.png" class="img-fluid rounded mx-auto d-inline-block" style="height: 30px;">
+                תיק אתר
+             </a>
+            <ul class="dropdown-menu"
+                aria-labelledby="navbarTikDown">
+                <li><a href="{{url_for('main.tikview')}}"
+                class="dropdown-item">תיקי אתר</a></li>
+                <li><a href="{{  url_for('main.addHyper') }}"
+                class="dropdown-item">הוספת שרת מארח</a></li>
+                <li><a href="{{  url_for('main.addServer') }}"
+                class="dropdown-item">הוספת שרת לוגי</a></li>
+            </ul>
+            </li>
             <li class="nav-item active">
                 <a href="{{ url_for('main.home') }}" class="nav-link active">
                 <img src="../static/images/icons8-todo-list-96.png" class="img-fluid rounded mx-auto d-inline-block" style="height: 30px;">
@@ -64,9 +84,11 @@
                 תמיכה
              </a>
             </li>
-                <li class="nav-item active">
+
+            </li>
+                <li class="nav-item active settings" >
                 <a href="{{ url_for('main.home') }}" class="nav-link active">
-                <img src="../static/images/icons8-settings-96.png" class="img-fluid rounded mx-auto d-inline-block" style="height: 30px;">
+                <img src="../static/images/icons8-settings-96.png" class="img-fluid rounded mx-auto d-inline-block" style="height: 30px; justify-content: left;">
                 הגדרות
              </a>
             </li>
