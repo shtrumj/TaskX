@@ -1,7 +1,7 @@
 import flask
 from flask import Response, json
 from flask import Blueprint, render_template, request, url_for, redirect, flash, session, jsonify
-from taskManager.models import Users, Customers, Employees, Tasks, WorkReports, Hypervisor, employees_query, allHypers, HyperSchema, hyper_schema,Servers
+from taskManager.models import Users, Customers, Employees, Tasks, WorkReports, Hypervisor, employees_query, allHypers, HyperSchema, hyper_schema,Servers, Roles
 from wtforms import ValidationError
 import re
 from flask_cors import CORS, cross_origin
@@ -335,6 +335,7 @@ def tikview():
 
 @main.route('/AddServer', methods=('GET','POST'))
 def addServer():
+    roles = Roles.query.all()
     retcustomer = Customers.query.all()
     hypervisors = Hypervisor.query.all()
     form = ServersForm()
@@ -342,27 +343,24 @@ def addServer():
         customerid = request.form.get('mycustomer')
         hypervisor = request.form.get('hypervisor')
         ip_address = request.form.get('ip_address')
-        name = request.form.get('name')
+        sname = request.form.get('name')
+        # return f'<h1>Server name is {sname}</h1>'
         osType = request.form.get('osType')
         roles = request.form.getlist('roles')
-        return f'<h1>Server roles : {roles}</h1>'
+        full_roles = ' '.join([str(elem) for elem in roles])
         remarks = request.form.get('remarks')
-        new_server = Servers( name=name, ip_address=ip_address, osType=osType, role=roles, remarks=remarks)
+        new_server = Servers(name=sname, ip_address=ip_address, osType=osType, role=full_roles, remarks=remarks, hyper_id= hypervisor)
         db.session.add(new_server)
         db.session.commit()
         flash('שרת לוגי נוצר בהצלחה!', category='success')
         return redirect((url_for('main.addServer')))
 
-    return render_template('create/AddAServer.html', form=form, customer=retcustomer, hyper=hypervisors)
+    return render_template('create/AddAServer.html', form=form, customer=retcustomer, hyper=hypervisors, myroles=roles)
 
 
 @main.route('/it', methods=['GET'])
-# @cross_origin(origin='*',headers=['Content- Type','Authorization'])
 def api_query():
-        # result = customers_schema.dumps(all_customers, ensure_ascii=False)
         all_customers = Customers.query.all()
-        # almost =jsonify(customer_schema.dump(all_customers))
-        # return almost
         return {'data': customer_schema.dump(all_customers)}, 201
 
 

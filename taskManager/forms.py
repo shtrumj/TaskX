@@ -77,7 +77,13 @@ class HyperVisorForm(FlaskForm):
     type = SelectField('סוג המארח', choices=[('1', 'Proxmox'), ('2', 'Hyper-V'), ('3', 'VMware')])
     status = SelectField('סטטוס', choices=[('1','פעיל'),('2','מיועד לכיבוי'),('3','כבוי')])
     brand = SelectField('יצרן',choices=[('1','HP'),('2','Dell'),('3','Lenovo')])
-    model = SelectField('דגם', choices=[('1','DL360'),('2','DL380'),('3','ML350'),('4','PowerEdge R630')])
+    model = SelectField('דגם', choices=[
+        ('1','DL360'),
+        ('2','DL380'),
+        ('3','ML350'),
+        ('4','PowerEdge R630'),
+        ('5','PowerEdge R430'),
+        ('6','PowerEdge T440')])
     warranty = DateField('תאריך פקיעת אחריות')
     physical_ram_in_GB = IntegerField('כמות זכרון פיזי ב GB')
     numberOfProcessors = StringField('מספר מעבדים')
@@ -90,17 +96,6 @@ class ServersForm(FlaskForm):
     ip_address = StringField('כתובת IPv4')
     osType = SelectField('סוג מערכת הפעלה', choices=[('1', 'Windows'), ('2', 'Linux')])
     remarks = StringField('הערות')
-    roles = SelectMultipleField('תפקידים',choices=[
-        ('1','ActiveDirectory'),
-        ('2','AntivirusConsole'),
-        ('3','DHCP'),
-        ('4','DNS'),
-        ('5','SQL'),
-        ('6','Exchange'),
-        ('7','Terminal Server'),
-        ('8', 'DVR'),
-        ('9', 'File Server')
-    ])
     submit = SubmitField('שרת חדש')
 
 

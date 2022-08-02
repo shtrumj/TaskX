@@ -28,9 +28,6 @@ async function hyperfetch(myselect) {
 function show(data, sel) {
     let mySelect = sel;
     let mydata = data.data;
-    // console.log("My Select is " + mySelect)
-    // console.log("My Data is :" + mydata[0]["custid"])
-
     console.log("your selection is " ,mySelect)
     let newArray = mydata.filter(function (id) {
         return id.custid == mySelect;
@@ -38,7 +35,7 @@ function show(data, sel) {
     let optionHTML = '';
     let ips = document.getElementById('ips')
     for (const obj of newArray) {
-        optionHTML += '<option value="' + obj.id + '">' + obj.ip_address + '</option>';
+        optionHTML += '<option value="' + obj.ip_address + '">' + obj.ip_address + '</option>';
     }
     ips.innerHTML = optionHTML;
 

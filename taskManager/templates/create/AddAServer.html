@@ -46,12 +46,11 @@
                             {{ form.remarks(class_="form-control") }}
                         </div>
                         <div class="form-outline sm-4" >
-                                {% for role in form.roles %}
-                                    <div class="form-check form-switch">
-                                    <input name="roles" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">{{  role }}</label>
-                                    </div>
-                                {%  endfor %}
+                            {% for role in myroles %}
+                                <div class="form-check form-switch">
+                                   {{ role.roleName }}  <input name="roles" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" value={{ role.roleName }}>
+                                </div>
+                            {%  endfor %}
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">

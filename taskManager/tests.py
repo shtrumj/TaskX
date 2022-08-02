@@ -7,7 +7,7 @@ from taskManager.extensions import db, login_manager
 from werkzeug.security import generate_password_hash
 import sqlite3
 
-conn = sqlite3.connect('data.sqlite3')
+conn = sqlite3.connect('data.sqlite')
 c = conn.cursor()
 tests = Blueprint('tests', __name__, template_folder='taskManager/templates', static_folder='taskManager/static')
 
