@@ -345,6 +345,7 @@ def addServer():
         name = request.form.get('name')
         osType = request.form.get('osType')
         roles = request.form.getlist('roles')
+        return f'<h1>Server roles : {roles}</h1>'
         remarks = request.form.get('remarks')
         new_server = Servers( name=name, ip_address=ip_address, osType=osType, role=roles, remarks=remarks)
         db.session.add(new_server)
