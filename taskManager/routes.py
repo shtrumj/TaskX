@@ -1,7 +1,7 @@
 import flask
 from flask import Response, json
 from flask import Blueprint, render_template, request, url_for, redirect, flash, session, jsonify
-from taskManager.models import Users, Customers, Employees, Tasks, WorkReports, Hypervisor, employees_query, allHypers, HyperSchema, hyper_schema
+from taskManager.models import Users, Customers, Employees, Tasks, WorkReports, Hypervisor, employees_query, allHypers, HyperSchema, hyper_schema,Servers
 from wtforms import ValidationError
 import re
 from flask_cors import CORS, cross_origin
@@ -338,7 +338,20 @@ def addServer():
     retcustomer = Customers.query.all()
     hypervisors = Hypervisor.query.all()
     form = ServersForm()
-    # if request.method == 'POST':
+    if request.method == 'POST':
+        customerid = request.form.get('mycustomer')
+        hypervisor = request.form.get('hypervisor')
+        ip_address = request.form.get('ip_address')
+        name = request.form.get('name')
+        osType = request.form.get('osType')
+        roles = request.form.getlist('roles')
+        remarks = request.form.get('remarks')
+        new_server = Servers( name=name, ip_address=ip_address, osType=osType, role=roles, remarks=remarks)
+        db.session.add(new_server)
+        db.session.commit()
+        flash('שרת לוגי נוצר בהצלחה!', category='success')
+        return redirect((url_for('main.addServer')))
+
     return render_template('create/AddAServer.html', form=form, customer=retcustomer, hyper=hypervisors)
 
 

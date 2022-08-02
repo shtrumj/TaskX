@@ -50,9 +50,6 @@ class Employees(db.Model):
     email = db.Column(db.String(25), unique=True)
     phone = db.Column(db.TEXT)
 
-    # customer = db.relationship('Customers', secondary=EmployeeSysadmin, backref='administrators')
-    # tasks = db.relationship('Tasks', backref='employee', lazy=True)
-
     def __init__(self, firstName, lastName, email, phone):
         self.firstName = firstName
         self.lastName = lastName
@@ -70,7 +67,7 @@ class Servers(db.Model):
     ip_address = db.Column(db.String(20))
     osType = db.Column(db.String(20))
     role = db.Column(db.String(150))
-    remarks = db.Column(db.String(20))
+    remarks = db.Column(db.String(20), nullable=True)
     hyper_id = db.Column(db.Integer, db.ForeignKey('hypervisor.id'))
 
     def __init__(self,name, ip_address, osType, role, remarks):

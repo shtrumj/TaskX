@@ -12,9 +12,8 @@
                     <form method="POST">
                         {{ form.hidden_tag() }}
                         <div class="divider d-flex align-items-center sm-4">
-                            <p class="text-center fw-bold mx-3 mb-0"></p>
                         </div>
-                        <div class="form-outline sm-4 ">
+                        <div class="form-outline col-sm-6 mb-3">
                         <select name="mycustomer" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="mycustomer" onchange="myfunc()">
                               <option name="selected">אנא בחרו לקוח</option>
                                 {%  for i in customer %}
@@ -23,34 +22,36 @@
                         </select>
                             <select name="hypervisor" id="ips"class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="hypervisor" onchange="myfunc()">
                               <option name="selected" id="options">אנא בחרו שרת מארח</option>
-{#                                {%  for i in hyper %}#}
-{#                                <option value="{{ i.id }}">{{ i.ip_address }}</option>#}
-{#                                {% endfor %}#}
                         </select>
 
                         </div>
-                        <div class="form-outline sm-4 ">
+                        <div class="form-outline col-sm-4 ">
                             {{ form.ip_address.label(class_="form-label") }}
                             </br>
                             {{ form.ip_address(class_="form-control") }}
                         </div>
-                        <div class="form-outline sm-4 ">
+                        <div class="form-outline col-sm-4 ">
                             {{ form.name.label(class_="form-label") }}
                             </br>
                             {{ form.name(class_="form-control") }}
                         </div>
-                        <div class="form-outline sm-4 ">
+                        <div class="form-outline col-sm-4">
                             {{ form.osType.label(class_="form-label") }}
                             </br>
                             {{ form.osType(class_="form-control") }}
                         </div>
-                        <div class="form-outline sm-4 ">
-                         <label class="form-label" for="roles">תפקידי השרת:</label>
-                            <select name="roles" id="roleSelect" multiple class="form-select col align-items-center" style="direction: ltr;">
+                        <div class="form-outline col-sm-4 mb-3">
+                            {{ form.remarks.label(class_="form-label") }}
+                            </br>
+                            {{ form.remarks(class_="form-control") }}
+                        </div>
+                        <div class="form-outline sm-4" name="roles">
                                 {% for role in form.roles %}
-                                <option value="{{ role }}">{{ role }}</option>
+                                    <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">{{  role }}</label>
+                                    </div>
                                 {%  endfor %}
-                            </select>
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">

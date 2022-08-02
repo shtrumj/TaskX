@@ -41,22 +41,5 @@ function show(data, sel) {
         optionHTML += '<option value="' + obj.ip_address + '">' + obj.ip_address + '</option>';
     }
     ips.innerHTML = optionHTML;
-        // select.insertAdjacentHTML('beforeend', `
-        // <option value ="${obj.ip_address}">${obj.ip_address}</option>
-        // `)
-        // option.append("<option>" + obj.ip_address + "</option")
-
-
-        // $('hyperoptions').append($('<option>').val(obj.ip_address).text(obj.ip_address));
-        // console.log(obj.ip_address)
-
-    // for (let [key,value] of Object.entries(newArray)){
-    //     console.log(`${value}`)
-    // console.log(newArray);
-    // for (let [key,value] of Object.entries(newArray)){
-    //     if (key == 'ip_address'){
-    //         console.log(`${key}: ${value}`);
-
-
 
 }
