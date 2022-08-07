@@ -329,9 +329,10 @@ def editcust():
 
 @main.route('/TikAtar',methods=('GET','POST'))
 def tikview():
+    hypers = Hypervisor.query.all()
     retcustomer = Customers.query.all()
     form = Mycustomersform()
-    return render_template('views/TikAtar.html', form=form, customer=retcustomer )
+    return render_template('views/TikAtar2.html', form=form, customer=retcustomer, hypers=hypers )
 
 @main.route('/AddServer', methods=('GET','POST'))
 def addServer():

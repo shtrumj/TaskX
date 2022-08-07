@@ -12,7 +12,7 @@
 
 <h1>{%  block heading %}{% endblock heading %}</h1>
 
-<body class="d-flex flex-column min-vh-100">
+<body>
 {% block flash %}
 {% with messages = get_flashed_messages(with_categories=true) %}
     <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->

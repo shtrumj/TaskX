@@ -1,12 +1,11 @@
 {% extends'formBase.html' %}
-{% block excss %}{% endblock excss %}
+{#{% block excss %}{% endblock excss %}#}
+{#{% block title %} {%  endblock title %}#}
 {% block menu %}
-{#    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">#}
-
-<nav class="navbar fixed-top navbar-expand-md bg-primary shadow navbar-dark bg-faded black">
+<nav class="navbar  navbar-expand-md bg-primary shadow navbar-dark bg-faded black mp-3">
 <a
         href="#"
-        class="navbar-brand mb-0 h1 d-block align-top  pull-left navbar-inner text-center">
+        class="navbar-brand mb-0 pull-left navbar-inner text-center">
             Task{-IT-}
 </a>
     <button
@@ -95,5 +94,6 @@
     </ul>
 </div>
 </nav>
-
 {% endblock menu%}
+<h1>{% block heading %}{% endblock heading %}</h1>
+{% block content %}{% endblock content %}

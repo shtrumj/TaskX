@@ -1,20 +1,15 @@
 {% extends 'base.html' %}
 {% block title %}Form {% endblock %}
 {% block excss %}{% endblock excss %}
-
-
 {% block menu %}{% endblock menu %}
-
-    <div class="container-fluid">
-        {% block heading %}{% endblock %}
-    </div>
+<h1>{% block heading %}{% endblock heading %}</h1>
 {% block content %}
 {% endblock content %}
 {% block footer %}
-    <div id="footer" class="shadow h-100 d-flex flex-column justify-content-end text-md-end  py-4 px-4 px-xl-5 bg-primary rounded">
+    <footer id="footer" class="shadow  navbar navbar-fixed-bottom  justify-content-end text-md-end  py-4 px-2 px-xl-5 bg-primary rounded mt-auto">
         <!-- Copyright -->
         <div class="text-white mb-3 mb-md-0">
             Copyright TROT LTD© 2022. All rights reserved.
         </div>
-    </div>
+    </footer>
 {% endblock footer %}
