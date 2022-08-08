@@ -68,3 +68,21 @@ h1{
 form#clientForm{
     height: max-content;
 }
+.canvas {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    position: relative;
+    height: auto;
+    width: 100%;
+    padding-bottom: 100%;
+    vertical-align: middle;
+    overflow: hidden;
+    text-align: center;
+}
+.svg-content {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
