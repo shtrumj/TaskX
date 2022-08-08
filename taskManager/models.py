@@ -69,14 +69,18 @@ class Servers(db.Model):
     role = db.Column(db.String(150))
     remarks = db.Column(db.String(20), nullable=True)
     hyper_id = db.Column(db.Integer, db.ForeignKey('hypervisor.id'))
+    hyper_ip =db.Column(db.String(20))
+    customer_id= db.Column(db.Integer, db.ForeignKey('customers.id'))
 
-    def __init__(self,name, ip_address, osType, role, remarks, hyper_id):
+    def __init__(self,name, ip_address, osType, role, remarks, hyper_id, hyper_ip, customer_id):
         self.ip_address = ip_address
         self.name = name
         self.osType = osType
         self.role = role
         self.remarks = remarks
         self.hyper_id = hyper_id
+        self.hyper_ip = hyper_ip
+        self.customer_id = customer_id
 
 class Roles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -137,6 +141,7 @@ class Customers(db.Model):
     admin2 = db.Column(db.String(30), nullable=True)
     admin3 = db.Column(db.String(30), nullable=True)
     hypervisors = db.relationship('Hypervisor', backref='owner')
+    servers = db.relationship('Servers', backref='customer')
 
     def __init__(self, name, city, address, internalDomain, externalDomain, owaAdd, admin1, admin2, admin3):
         self.name = name
@@ -242,5 +247,19 @@ class HyperSchema(ma.SQLAlchemyAutoSchema):
         # model = Hypervisor
 
 
-
 allHypers = HyperSchema(many=True)
+
+
+class ServersSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+            fields = (
+                "ip_address",
+                "osType",
+                "hyper_id",
+                "hyper_ip",
+                "name"
+            )
+
+
+allServers = ServersSchema(many=True)
+

@@ -2,7 +2,7 @@ from flask import Flask, Blueprint
 from flask_session import Session
 from flask_marshmallow import Marshmallow
 from flask_restful import Api, Resource
-from .extensions import db, migrate, login_manager, CORS, cross_origin,ma
+from .extensions import db, migrate, login_manager, CORS, cross_origin, ma, api
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from taskManager.routes import main
 from taskManager.tests import tests
@@ -24,7 +24,7 @@ def create_app():
     migrate.init_app(app, db, render_as_batch=True)
     app.register_blueprint(main)
     login_manager.init_app(app)
-    api = Api(app)
+    api.init_app(app)
     # cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
     CORS(app)
     app.register_blueprint(tests)

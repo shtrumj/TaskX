@@ -4,6 +4,8 @@ from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
 from flask_login import LoginManager
 from flask_cors import CORS, cross_origin
+from flask_restful import Api, Resource
+
 
 metadata = MetaData(
     naming_convention={
@@ -20,4 +22,5 @@ db = SQLAlchemy(metadata=metadata)
 migrate = Migrate()
 login_manager = LoginManager()
 CORS()
+api = Api()
 ma = Marshmallow()

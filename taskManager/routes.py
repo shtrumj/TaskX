@@ -1,7 +1,7 @@
 import flask
 from flask import Response, json
 from flask import Blueprint, render_template, request, url_for, redirect, flash, session, jsonify
-from taskManager.models import Users, Customers, Employees, Tasks, WorkReports, Hypervisor, employees_query, allHypers, HyperSchema, hyper_schema,Servers, Roles
+from taskManager.models import Users, Customers, Employees, Tasks, WorkReports, Hypervisor, employees_query, allHypers, HyperSchema, hyper_schema,Servers, Roles,ServersSchema,allServers
 from wtforms import ValidationError
 import re
 from flask_cors import CORS, cross_origin
@@ -9,10 +9,9 @@ from taskManager.models import customer_schema
 from datetime import datetime
 from flask_login import login_user, login_required, logout_user, current_user
 from taskManager.forms import Loginform, RegistrationForm, CustomersForm, EmployeeForm, TasksForm, HomeSubmit, WorkReportForm, ReportView, HyperVisorForm,InfraView, Mycustomersform, ServersForm
-from taskManager.extensions import db, login_manager
+from taskManager.extensions import db, login_manager,api, Resource
 from sqlalchemy.ext.serializer import loads, dumps
 from flask_cors import CORS, cross_origin
-
 
 main = Blueprint('main', __name__, template_folder='taskManager/templates', static_folder='taskManager/static')
 
@@ -332,7 +331,7 @@ def tikview():
     hypers = Hypervisor.query.all()
     retcustomer = Customers.query.all()
     form = Mycustomersform()
-    return render_template('views/TikAtar2.html', form=form, customer=retcustomer, hypers=hypers )
+    return render_template('views/TikAtar3.html', form=form, customer=retcustomer, hypers=hypers )
 
 @main.route('/AddServer', methods=('GET','POST'))
 def addServer():
@@ -350,7 +349,9 @@ def addServer():
         roles = request.form.getlist('roles')
         full_roles = ' '.join([str(elem) for elem in roles])
         remarks = request.form.get('remarks')
-        new_server = Servers(name=sname, ip_address=ip_address, osType=osType, role=full_roles, remarks=remarks, hyper_id= hypervisor)
+        hyper= Hypervisor.query.filter_by(id=hypervisor).first()
+        customerid = hyper.custid
+        new_server = Servers(name=sname, ip_address=ip_address, osType=osType, role=full_roles, remarks=remarks, hyper_id= hypervisor, hyper_ip=hyper.ip_address, customer_id=customerid)
         db.session.add(new_server)
         db.session.commit()
         flash('שרת לוגי נוצר בהצלחה!', category='success')
@@ -371,3 +372,17 @@ def hyperapi_query():
         return {'data': allHypers.dump(mhypers)},201
 
 
+@main.route('/servers', methods=['GET'])
+def serversapi_query():
+        mServers = Servers.query.all()
+        return {'data': allServers.dump(mServers)},201
+
+
+class ServersByID(Resource):
+    def get(self,id):
+        fields = ['name', 'ip_address']
+        byCustomer = Servers.query.filter_by(customer_id=id).all()
+        return {'data': allServers.dump(byCustomer)},201
+
+
+api.add_resource(ServersByID, "/ser/<int:id>")
